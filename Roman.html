@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Roman Comparator - Compare Roman Numerals Variants">
+        <meta name="author" content="Reinhold Lauer">
+        <title>Roman Comperator</title>
+
+        <!-- Bootstrap Core -->
+        <link rel="stylesheet" href="https://movie-file-merger.org/css/bootstrap.min.css" />
+
+        <!-- Prism Syntax Hightlighter -->
+        <link rel="stylesheet" href="https://movie-file-merger.org/SoloLearn/Prism.css" />
+        <link href="https://movie-file-merger.org/SoloLearn/Roman.css" rel="stylesheet" />
+
+        <!-- JQuery -->
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    </head>
+    <body>
+
+        <!-- The Menu -->
+        <div class="navbar-wrapper">
+            <nav class="navbar navbar-inverse navbar-default">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="https://www.sololearn.com/Profile/8489802">
+                        <img style="max-width:55px; margin-top: -7px;" src="https://movie-file-merger.org/SoloLearn/AppleAndOrange.png">
+                    </a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Python<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="load_PythonByZaidPatel">by Zaid Patel</a></li>
+                                <li><a href="#" id="load_PythonByDragos">by Dragos</a></li>
+                                <li><a href="#" id="load_PythonByAndreyVostokov">by Andrey Vostokov</a></li>
+                                <li><a href="#" id="load_PythonByMertYazıcı">by Mert Yazıcı</a></li>
+                                <li><a href="#" id="load_PythonByZoetic_Zeel">by Zoetic_Zeel</a></li>
+                                <li><a href="#" id="load_PythonByCepagrave">by Cépagrave</a></li>
+                                <li><a href="#" id="load_PythonByKartikeySahu">by Kartikey Sahu</a></li>
+                                <li><a href="#" id="load_PythonByWilliamSellier">by William Sellier</a></li>
+                                <li><a href="#" id="load_PythonByErikUmble">by Erik Umble</a></li>
+                                <li><a href="#" id="load_PythonBySubhrajyotyRoy">by Subhrajyoty Roy</a></li>
+                                <li><a href="#" id="load_PythonByLarryKarani">by Larry Karani</a></li>
+                                <li><a href="#" id="load_PythonByMiso">by Miso</a></li>
+                                <li><a href="#" id="load_PythonByRuvenGrinberg">by Ruven Grinberg/Рувен Гринберг</a></li>
+                                <li><a href="#" id="load_PythonByDomHarris">by Dom Harris</a></li>
+                                <li><a href="#" id="load_PythonByPasinduPerera">by Pasindu Perera</a></li>
+                                <li><a href="#" id="load_PythonByHardikAhi">by Hardik Ahi</a></li>
+                                <li><a href="#" id="load_PythonByPaulJacobs">by Paul Jacobs</a></li>
+                                <li><a href="#" id="load_PythonByEthanBoyd">by Ethan Boyd</a></li>
+                                <li><a href="#" id="load_PythonByXianCollier">by Xian Collier</a></li>
+                                <li><a href="#" id="load_PythonByLuisMartin">by Luis Martín</a></li>
+                                <li><a href="#" id="load_PythonBySKarfunkel">by SKarfunkel</a></li>
+                                <li><a href="#" id="load_PythonBySarahCheril">by Sarah Cheril</a></li>
+                                <li><a href="#" id="load_PythonByPeri">by Peri</a></li>
+                                <li><a href="#" id="load_PythonByDario">by Dario</a></li>
+                                <li><a href="#" id="load_PythonByAndyPandy">by Andy Pandy</a></li>
+                                <li><a href="#" id="load_PythonByValnyx">by Valnyx</a></li>
+                                <li><a href="#" id="load_PythonByMaurizioPrandini">by Maurizio Prandini</a></li>
+                                <li><a href="#" id="load_PythonByOmniShift">by OmniShift</a></li>
+                                <li><a href="#" id="load_PythonByYYama">by Y Yama</a></li>
+                                <li><a href="#" id="load_PythonByRiyaThapar">by Riya Thapar</a></li>
+                                <li><a href="#" id="load_PythonByCodeMaster101">by CodeMaster101</a></li>
+                                <li><a href="#" id="load_PythonByLeonardoVinicius">by Leonardo Vinicius</a></li>
+                                <li><a href="#" id="load_PythonByAfeefThasleem">by Afeef Thasleem</a></li>
+                                <li><a href="#" id="load_PythonByRam">by Ram</a></li>
+                                <li><a href="#" id="load_PythonByWilliamSalunsonGalas">by William Salunson Galas</a></li>
+                                <li><a href="#" id="load_PythonByIshiraLiyanage">by Ishira Liyanage</a></li>
+                                <li><a href="#" id="load_PythonBySimone">by Simone</a></li>
+                                <li><a href="#" id="load_PythonByAndreyKondakov">by Andrey Kondakov</a></li>
+                                <li><a href="#" id="load_PythonByTom2003611">by Tom2003611</a></li>
+                                <li><a href="#" id="load_PythonByLenoxNdubi">by Lenox Ndubi</a></li>
+                                <li><a href="#" id="load_PythonByGaryPurkett">by Gary Purkett</a></li>
+                                <li><a href="#" id="load_PythonByBenjaminSmylie">by Benjamin Smylie</a></li>
+                                <li><a href="#" id="load_PythonByLaurensJan">by Laurens Jan</a></li>
+                                <li><a href="#" id="load_PythonByNathanLewis">by Nathan Lewis</a></li>
+                                <li><a href="#" id="load_PythonBySuvansh">by Suvansh</a></li>
+                                <li><a href="#" id="load_PythonByJayantChoudhary">by Jayant Choudhary</a></li>
+                                <li><a href="#" id="load_PythonByFilipeBanzoli">by Filipe Banzoli</a></li>
+                                <li><a href="#" id="load_PythonByMahmoudNasr">by Mahmoud Nasr</a></li>
+                                <li><a href="#" id="load_PythonByJazHamilton">by Jaz Hamilton</a></li>
+                                <li><a href="#" id="load_PythonByJoaoMarcos">by Joao Marcos</a></li>
+                                <li><a href="#" id="load_PythonByKILLaBYTE">by KILLaBYTE</a></li>
+                                <li><a href="#" id="load_PythonByThameemJabirKJ">by Thameem Jabir KJ</a></li>
+                                <li><a href="#" id="load_PythonByLorenzo">by Lorenzo</a></li>
+                                <li><a href="#" id="load_PythonByPaulDSouza">by Paul D'Souza</a></li>
+                                <li><a href="#" id="load_PythonByStrange">by Strange</a></li>
+                                <li><a href="#" id="load_PythonByUlissesCruz">by Ulisses Cruz</a></li>
+                                <li><a href="#" id="load_PythonByTaiDucPham">by Tai Duc Pham</a></li>
+                                <li><a href="#" id="load_PythonByXavier">by Xavier</a></li>
+                                <li><a href="#" id="load_PythonByRuss">by Russ</a></li>
+                                <li><a href="#" id="load_PythonByLorenzoParisi">by Lorenzo Parisi</a></li>
+                                <li><a href="#" id="load_PythonByCorradoBattagliese">by Corrado Battagliese</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">C++<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="load_CPPBySzaky">by Szaky</a></li>
+                                <li><a href="#" id="load_CPPBySwim">by ~ swim ~</a></li>
+                                <li><a href="#" id="load_CPPByAntonioBernardini">by Antonio Bernardini</a></li>
+                                <li><a href="#" id="load_CPPByBBR">by B.B.R./a></li>
+                                <li><a href="#" id="load_CPPByVivekAgrawal">by Vivek Agrawal</a></li>
+                                <li><a href="#" id="load_CPPByIngoMaarman">by Ingo Maarman</a></li>
+                                <li><a href="#" id="load_CPPByAJTurner">by AJ Turner</a></li>
+                                <li><a href="#" id="load_CPPByRishuKumar">by Rishu Kumar</a></li>
+                                <li><a href="#" id="load_CPPBySachinSingh">by Sachin Singh</a></li>
+                                <li><a href="#" id="load_CPPByDmitriyGrigoriev">by Dmitriy Grigoriev</a></li>
+                                <li><a href="#" id="load_CPPByPawelSidorkiewicz">by Paweł Sidorkiewicz</a></li>
+                                <li><a href="#" id="load_CPPBSpudo">by Spudo</a></li>
+                                <li><a href="#" id="load_CPPByCezaryJaniak">by Cezary Janiak</a></li>
+                                <li><a href="#" id="load_CPPBySuraj">by Suraj</a></li>
+                                <li><a href="#" id="load_CPPByCoderPP">by Coder++</a></li>
+                                <li><a href="#" id="load_CPPBySalehAlsayed">by Saleh Alsayed</a></li>
+                                <li><a href="#" id="load_CPPByOrHy3">by OrHy3</a></li>
+                                <li><a href="#" id="load_CPPByPawelZurawski">by Pawel Żurawski</a></li>
+                                <li><a href="#" id="load_CPPByIvanVladimirov">by Ivan Vladimirov</a></li>
+                                <li><a href="#" id="load_CPPByRoman">by Roman</a></li>
+                                <li><a href="#" id="load_CPPByVari93">by Vari93</a></li>
+                                <li><a href="#" id="load_CPPByMichaelFedorov">by Michael Fedorov</a></li>
+                                <li><a href="#" id="load_CPPByShubhamSingh">by Shubham Singh</a></li>
+                                <li><a href="#" id="load_CPPByShahin">by Shahin</a></li>
+                                <li><a href="#" id="load_CPPByZidanZidan">by Zidan Zidan</a></li>
+                                <li><a href="#" id="load_CPPByDavidQiu">by David Qiu</a></li>
+                                <li><a href="#" id="load_CPPByPerlaSmaniotto">by Perla Smaniotto</a></li>
+                                <li><a href="#" id="load_CPPByGabrielCervantesHurtado">by Gabriel Cervantes Hurtado</a></li>
+                                <li><a href="#" id="load_CPPByShreyJain">by Shrey Jain</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">C#<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="load_CSharpByPaulCaron">by Paul Caron</a></li>
+                                <li><a href="#" id="load_CSharpByNadeKrest">by Nade Krest</a></li>
+                                <li><a href="#" id="load_CSharpByJacobGandemo">by Jacob Gandemo</a></li>
+                                <li><a href="#" id="load_CSharpByFranciscoCasas">by Francisco Casas</a></li>
+                                <li><a href="#" id="load_CSharpByKuldeepTiwari">by Kuldeep Tiwari</a></li>
+                                <li><a href="#" id="load_CSharpBySilvioDuka">by Silvio Duka</a></li>
+                                <li><a href="#" id="load_CSharpBySamiel">by Saniel</a></li>
+                                <li><a href="#" id="load_CSharpBySelC">by SelC</a></li>
+                                <li><a href="#" id="load_CSharpByWojciechPowch">by Wojciech Powch</a></li>
+                                <li><a href="#" id="load_CSharpByPaoloTorregroza">by Paolo Torregroza</a></li>
+                                <li><a href="#" id="load_CSharpByArchweb">by Archweb</a></li>
+                                <li><a href="#" id="load_CSharpByBob">by Bob</a></li>
+                                <li><a href="#" id="load_CSharpByNguy">by Nguyễn Bá Tùng</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Java<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="load_JavaByLukArToDo">by LukArToDo</a></li>
+                                <li><a href="#" id="load_JavaByRahulJaiswal">by Rahul Jaiswal</a></li>
+                                <li><a href="#" id="load_JavaByXnycs">by Xnycs</a></li>
+                                <li><a href="#" id="load_JavaByMichal">by Michal</a></li>
+                                <li><a href="#" id="load_JavaByFaithfulMind">by FaithfulMind</a></li>
+                                <li><a href="#" id="load_JavaByIHeb04">by IHeb04</a></li>
+                                <li><a href="#" id="load_JavaByMaheshkumarPalled">by Maheshkumar Palled</a></li>
+                                <li><a href="#" id="load_JavaByKintungLuna">by Kintung Luna</a></li>
+                                <li><a href="#" id="load_JavaByJayme">by Jayme</a></li>
+                                <li><a href="#" id="load_JavaByJohnMcDonald">by John McDonald</a></li>
+                                <li><a href="#" id="load_JavaByNightmare">by Nightmare</a></li>
+                                <li><a href="#" id="load_JavaBySkyChedkurfeldFu">by Sky Chedkurfeld Fu</a></li>
+                                <li><a href="#" id="load_JavaByDavidVerduzco">by David Verduzco</a></li>
+                                <li><a href="#" id="load_JavaByMichele">by Michele</a></li>
+                                <li><a href="#" id="load_JavaBySatyaJitPradhan">by SatyaJit Pradhan</a></li>
+                                <li><a href="#" id="load_JavaByAmal">by Amal</a></li>
+                                <li><a href="#" id="load_JavaByDanielEakin">by Daniel Eakin</a></li>
+                                <li><a href="#" id="load_JavaByImamPratama">by Imam Pratama</a></li>
+                                <li><a href="#" id="load_JavaByAntonioAvella">by Antonio Avella</a></li>
+                                <li><a href="#" id="load_JavaByKyriakosKyrkis">by Kyriakos Kyrkis</a></li>
+                                <li><a href="#" id="load_JavaByDaZzle">by DaZzle</a></li>
+                                <li><a href="#" id="load_JavaByMarcoBongini">by Marco Bongini</a></li>
+                                <li><a href="#" id="load_JavaByPiterDorohov">by Piter Dorohov</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">C<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="load_CByRanjithKatravula">by Ranjith Katravula</a></li>
+                                <li><a href="#" id="load_CByJaredBird">by Jared Bird</a></li>
+                                <li><a href="#" id="load_CByGudduKumar">by Guddu Kumar</a></li>
+                                <li><a href="#" id="load_CByJonasR">by Jonas R</a></li>
+                                <li><a href="#" id="load_CByGaligool">by Galigool</a></li>
+                            </ul>
+                        </li>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Ruby<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="load_RubyByKasi">by Käzî Mrîdùl Høssäîn</a></li>
+                                <li><a href="#" id="load_RubyByJeremy">by Jeremy</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="https://movie-file-merger.org/SoloLearn/Roman.html" target="_blank">In Browser</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Roman Comparator<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="load_CodeComparatorAbout">About</a></li>
+                                <li><a href="#" id="load_CodeComparatorInstructions">Short Instructions</a></li>                                               
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="row">
+            <!-- Code I Area -->
+            <div class="col-lg-6">
+                <h5><label id='codeISelector'>
+                    <input type="radio" id="showInCodeI" name="optradio" checked="checked"/>
+                    &nbsp; Code I - </label>
+                    <a href="#" id="codeITitle" target="_blank"></a>
+                    <a href="#" id="codeIUpDown" target="_blank">
+                        <img class='SLLink' src="https://movie-file-merger.org/SoloLearn/UpDown.png">
+                        <img class='SLLink' src="https://movie-file-merger.org/SoloLearn/Comment.png">
+                    </a>
+                </h5>
+                <pre class="line-numbers" id='codeIArea'><code id ="codeICode"></code></pre>
+            </div>
+            <!-- Code II Area -->
+            <div class="col-lg-6">
+                <h5><label id='codeIISelector'>
+                    <input type="radio" id="showInCodeII" name="optradio"/>
+                    &nbsp; Code II - </label>
+                    <a href="#" id="codeIITitle" target="_blank"></a>
+                    <a href="#" id="codeIIUpDown" target="_blank">
+                        <img class='SLLink' src="https://movie-file-merger.org/SoloLearn/UpDown.png">
+                        <img class='SLLink' src="https://movie-file-merger.org/SoloLearn/Comment.png">
+                    </a>
+                </h5>
+                <pre class="line-numbers" id='codeIIArea'><code id ="codeIICode"></code></pre>
+            </div>
+        </div>
+
+        <!-- Bootstrap Core -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://movie-file-merger.org/js/bootstrap.min.js"></script>
+
+        <!-- Prism Syntax Hightlighter -->
+        <script src="https://movie-file-merger.org/SoloLearn/Prism.js"></script>
+        <script src="https://movie-file-merger.org/SoloLearn/Roman.js"></script>
+
+        <!-- JQuery -->
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>    
+    </body>        
+</html>

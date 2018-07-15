@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Comparator Engine - Compare SoloLearn Codes">
+        <meta name="author" content="Reinhold Lauer">
+        <title>Comparator Engine</title>
+
+        <!-- Bootstrap Core -->
+        <link rel="stylesheet" href="https://movie-file-merger.org/css/bootstrap.min.css" />
+
+        <!-- Prism Syntax Hightlighter -->
+        <link rel="stylesheet" href="https://movie-file-merger.org/SoloLearn/Prism.css" />
+        <link href="https://movie-file-merger.org/SoloLearn/ComparatorEngine.css" rel="stylesheet" />
+
+        <!-- JQuery -->
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    </head>
+    <body>
+
+        <!-- The Menu -->
+        <div class="navbar-wrapper">
+            <nav class="navbar navbar-inverse navbar-default">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="https://www.sololearn.com/Profile/8489802">
+                        <img style="max-width:55px; margin-top: -7px;" src="https://movie-file-merger.org/SoloLearn/AppleAndOrange.png">
+                    </a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Menu A<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a codePage="https://code.sololearn.com/cct5i2KUthjd/#c" 
+                                        codeLanguage="c" href="#" id="load_C">Code A</a></li>
+                                <li><a href="#" codePage="https://code.sololearn.com/cr15pyY8DCux/#cpp" 
+                                        codeLanguage="cpp" id="load_CPP">Code B</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Menu B<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a codePage="https://code.sololearn.com/cqk0aIT4O0f8/#cs" codeLanguage="csharp"
+                                        href="#" id="load_CSharp">Code C</a></li>
+                                <li><a codePage="https://code.sololearn.com/c72uJ0G7reUi/#java" codeLanguage="java"
+                                        href="#" id="load_Java">Code D</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="https://movie-file-merger.org/SoloLearn/ComparatorEngine.html" target="_blank">In Browser</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Comparator Engine<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a codePage="https://code.sololearn.com/csrf6fwFdJq2/#rb" codeLanguage="markdown"
+                                        href="#" id="load_CodeComparatorAbout">About</a></li>
+                                <li><a codePage="https://code.sololearn.com/ctCS6Qqa1sXS/#rb" codeLanguage="markdown"
+                                        href="#" id="load_CodeComparatorInstructions">Short Instructions</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="row">
+            <!-- Code I Area -->
+            <div class="col-lg-6">
+                <h5><label id='codeISelector'>
+                    <input type="radio" id="showInCodeI" name="optradio" checked="checked"/>
+                    &nbsp; Code I - </label>
+                    <a href="#" id="codeITitle" target="_blank"></a>
+                    <a href="#" id="codeIUpDown" target="_blank">
+                        <img class='SLLink' src="https://movie-file-merger.org/SoloLearn/UpDown.png">
+                        <img class='SLLink' src="https://movie-file-merger.org/SoloLearn/Comment.png">
+                    </a>
+                </h5>
+                <pre class="line-numbers" id='codeIArea'><code id ="codeICode"></code></pre>
+            </div>
+            <!-- Code II Area -->
+            <div class="col-lg-6">
+                <h5><label id='codeIISelector'>
+                    <input type="radio" id="showInCodeII" name="optradio"/>
+                    &nbsp; Code II - </label>
+                    <a href="#" id="codeIITitle" target="_blank"></a>
+                    <a href="#" id="codeIIUpDown" target="_blank">
+                        <img class='SLLink' src="https://movie-file-merger.org/SoloLearn/UpDown.png">
+                        <img class='SLLink' src="https://movie-file-merger.org/SoloLearn/Comment.png">
+                    </a>
+                </h5>
+                <pre class="line-numbers" id='codeIIArea'><code id ="codeIICode"></code></pre>
+            </div>
+        </div>
+
+        <!-- Bootstrap Core -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://movie-file-merger.org/js/bootstrap.min.js"></script>
+
+        <!-- Prism Syntax Hightlighter -->
+        <script src="https://movie-file-merger.org/SoloLearn/Prism.js"></script>
+        <script src="https://movie-file-merger.org/SoloLearn/ComparatorEngine.js"></script>
+
+        <!-- JQuery -->
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>    
+    </body>        
+</html>
