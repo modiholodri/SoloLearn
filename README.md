@@ -4,6 +4,7 @@ Contains stuff related to SoloLearn, like the Bonus Comparator, the Roman Compar
 About Comparator Engine
 =======================
 https://code.sololearn.com/WKu9Pils72yq/#js
+
 Compare different SoloLearn codes, written by Leaners on SoloLearn, side by side.
 Select if the code should be shown in the Code I area or the Code II area and then 
 cilck on the code to show in the menu. 
@@ -27,6 +28,7 @@ Following stuff has been used...
 - Feature-rich JavaScript library - JQuery. https://jquery.com
 
 Copyright (c) 2018 Modi (Reinhold Lauer)
+
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
