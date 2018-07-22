@@ -160,9 +160,10 @@ $( document ).ready( function( ) {
     setCallback( '#load_CPPByCoderPP', 'cpp', 'https://code.sololearn.com/cdY9Sd3hGaWP/?ref=app#cpp' );
     setCallback( '#load_CPPBySalehAlsayed', 'cpp', 'https://code.sololearn.com/ca4q1DE7Jnlh/?ref=app#cpp' );
     setCallback( '#load_CPPByOrHy3', 'cpp', 'https://code.sololearn.com/cN93TB34LlwO/?ref=app#cpp' );
-    setCallback( '#load_PythonByload_CPPByPawelZurawski', 'python', 'https://code.sololearn.com/c95KgqkAGPRm/?ref=app#cpp' );
+    setCallback( '#load_CPPByPawelSidorkiewicz', 'python', 'https://code.sololearn.com/c95KgqkAGPRm/?ref=app#cpp' );
     setCallback( '#load_CPPByIvanVladimirov', 'cpp', 'https://code.sololearn.com/cxXZ638435Qc/?ref=app#cpp' );
     setCallback( '#load_CPPByRoman', 'cpp', 'https://code.sololearn.com/cUWLdE12wjJL/?ref=app#cpp' );
+    setCallback( '#load_CPPByRomanBetter', 'cpp', 'https://code.sololearn.com/cmE0O9tJG7Mz/?ref=app#cpp' );
     setCallback( '#load_CPPByVari93', 'cpp', 'https://code.sololearn.com/cNqt2RJ156J8/?ref=app#cpp' );
     setCallback( '#load_CPPByMichaelFedorov', 'cpp', 'https://code.sololearn.com/cSiTu6pP2TfP/?ref=app#cpp' );
     setCallback( '#load_CPPByShubhamSingh', 'cpp', 'https://code.sololearn.com/cEt3G6qlx9S4/?ref=app#cpp' );
@@ -188,6 +189,7 @@ $( document ).ready( function( ) {
     setCallback( '#load_CSharpByPaoloTorregroza', 'csharp', 'https://code.sololearn.com/cYk7HdNUteQ1/?ref=app#cs' );
     setCallback( '#load_CSharpByArchweb', 'csharp', 'https://code.sololearn.com/cqOqV5Tx8qEb/?ref=app#cs' );
     setCallback( '#load_CSharpByBob', 'csharp', 'https://code.sololearn.com/cc4fW1jZ665K/?ref=app' );
+    setCallback( '#load_CSharpByNguy', 'csharp', 'https://code.sololearn.com/c8tB0UsTx13B/?ref=app' );
 
     // Java
     setCallback( '#load_JavaByLukArToDo', 'java', 'https://code.sololearn.com/c95Y62c4p1dV/?ref=app#java' );
@@ -204,7 +206,7 @@ $( document ).ready( function( ) {
     setCallback( '#load_JavaBySkyChedkurfeldFu', 'java', 'https://code.sololearn.com/c5Gl5F96reZ4/?ref=app#java' );
     setCallback( '#load_JavaByDavidVerduzco', 'java', 'https://code.sololearn.com/c3h6jBHsb7Zp/?ref=app#java' );
     setCallback( '#load_JavaByMichele', 'java', 'https://code.sololearn.com/cHuPkCUR07Ff/?ref=app#java' );
-    setCallback( '#load_JavaBSatyaJitPradhan', 'java', 'https://code.sololearn.com/c17OVQH0xMjH/?ref=app' );
+    setCallback( '#load_JavaBySatyaJitPradhan', 'java', 'https://code.sololearn.com/c17OVQH0xMjH/?ref=app' );
     setCallback( '#load_JavaByAmal', 'java', 'https://code.sololearn.com/cH3xxksMjUA1/?ref=app#java' );
     setCallback( '#load_JavaByDanielEakin', 'java', 'https://code.sololearn.com/cI4H08hyY01j/?ref=app#java' );
     setCallback( '#load_JavaByImamPratama', 'java', 'https://code.sololearn.com/cV7kSot0AN00/?ref=app#java' );
@@ -231,7 +233,7 @@ $( document ).ready( function( ) {
     
     getCode( 'markdown', 'Short Instructions', 'https://code.sololearn.com/c6HDkB1zS0e9/?ref=app' );
     $( '#showInCodeII' ).prop( 'checked', 'checked' );
-    getCode( 'markdown', 'About Code Comparator', 'https://code.sololearn.com/c1cFz5lYwHpm/?ref=app' );
+    getCode( 'markdown', 'About Roman Comparator', 'https://code.sololearn.com/c1cFz5lYwHpm/?ref=app' );
     $( '#showInCodeI' ).prop( 'checked', 'checked' );
 
     // set the tooltips in the titles

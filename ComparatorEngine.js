@@ -18,7 +18,7 @@ function showCodeIn( showIn, language, title, codePageOnSoloLearn, sourceCode ) 
 }
     
 // load the code in the corresponding selection    
-function getCode( language, title, codePageOnSoloLearn ) { 
+function getCode( language, codePageOnSoloLearn, title ) { 
 
     var whereToShow = showWhere(); // remember for later when successfully loaded
     $( '#' + whereToShow + 'Title' ).text( 'Loading...' );
@@ -72,40 +72,26 @@ function checkForChanges( ) {
     setTimeout( checkForChanges, 100 );
 }
 
-// set the callback for the corresponding selection
-/*
-function setCallback( actionElement, language, codePageOnSoloLearn ) { 
-    $( actionElement ).on( 'click', function( ) { 
-        getCode( language, $( actionElement ).text(), codePageOnSoloLearn );
-    });
-}
-*/
-// set the callback for the corresponding selection
-function setCallback( actionElement ) { 
-    $( actionElement ).on( 'click', function( ) { 
-        getCode($( actionElement ).attr( 'codeLanguage' ), 
-                $( actionElement ).text(), 
-                $( actionElement ).attr( 'codePage' ) );
+// set the callback for each object
+function setCallbacks(  ) { 
+    var iCallbackNumber = 0;
+    $( '#codeICode' ).text( 'Setting callbacks...' );
+    $( '.SLCode' ).each( function ( ) {
+        $( '#codeICode' ).text( 'Setting callbacks ' + iCallbackNumber++  );
+        $( this ).on( 'click', function( ) { 
+            getCode($( this ).attr( 'codeLanguage' ), 
+                    $( this ).attr( 'codePage' ), 
+                    $( this ).text() ); // the title
+        });
     });
 }
 
 $( document ).ready( function( ) {
-    // SameSame
-    // setCallback( '#load_C', 'c', 'https://code.sololearn.com/cct5i2KUthjd/#c' );
-    setCallback( '#load_C' );
-    setCallback( '#load_CPP' );
+    setCallbacks( ); 
 
-    // Different
-    setCallback( '#load_CSharp' );
-    setCallback( '#load_Java' );
-    
-    // Code Copmarator
-    setCallback( '#load_CodeComparatorAbout' );
-    setCallback( '#load_CodeComparatorInstructions' ); 
-
-    getCode( 'markdown', 'Short Instructions', 'https://code.sololearn.com/ctCS6Qqa1sXS/#rb' );
+    getCode( 'markdown', 'https://code.sololearn.com/ctCS6Qqa1sXS/#rb', 'Short Instructions' );
     $( '#showInCodeII' ).prop( 'checked', 'checked' );
-    getCode( 'markdown', 'About Code Comparator', 'https://code.sololearn.com/csrf6fwFdJq2/#rb' );
+    getCode( 'markdown', 'https://code.sololearn.com/csrf6fwFdJq2/#rb', 'About Comparator Engine' );
     $( '#showInCodeI' ).prop( 'checked', 'checked' );
 
     // set the tooltips in the titles
