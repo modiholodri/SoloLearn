@@ -20,13 +20,45 @@ Sololearn and leave a commment.
 Special thanks to...
 - All the Learners who have been writing SoloLearn codes.
 
-Cheers, Modi
+About Roman Comparator
+=====================
+https://code.sololearn.com/WU3X1bCz83cI/#js
 
+Compare two Roman Numerals Challenge codes side by side.
+
+Special thanks to...
+- All the Learners who have been writing Roman Numerals codes.
+
+About Bonus Comparator
+=====================
+https://code.sololearn.com/WfpY4zqBx9yk
+
+Compare two codes (Bonus) side by side.
+
+The Bonus program has been written in different languages, so that they can be compared 
+to each other.
+The functionality of codes in the SameSame section is exactly the same. In the Different 
+section it is different and codes cannot be compared really. Codes in the External section 
+cannot be executed on SoloLearn.
+
+Special thanks to...
+- Jan Markus - https://www.sololearn.com/Profile/6470703
+- C++ Soldier (Babak) - https://www.sololearn.com/Profile/4330534
+- Morpheus - https://www.sololearn.com/Profile/3083060
+- John Wells - https://www.sololearn.com/Profile/579567
+- Sebastien Guex - https://www.sololearn.com/Profile/2165527
+- Burey - https://www.sololearn.com/Profile/197327
+- Gordie - no profile anymore...
+
+Credits
+========
 Following stuff has been used...
 - Syntax highlighter - Prism. https://prismjs.com
 - Responsive mobile-first frontend - Bootstrp. https://getbootstrap.com
-- Feature-rich JavaScript library - JQuery. https://jquery.com
+- Feature-rich JavaScript library - jQuery. https://jquery.com
 
+Copyright
+=========
 Copyright (c) 2018 Modi (Reinhold Lauer)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
