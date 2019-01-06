@@ -69,25 +69,25 @@ function animate( ) {
   // draw the grid
   var x, y;
   for( x = -5; x <= 5; x++ ) {
-    drawGrid( blSi*x, -blSi,     0, blSi*x, blSi,     0 );
+    drawGrid( x, -1, 0, x, 1, 0 );
     if ( showOuterGrid ) {
-      drawGrid( blSi*x, -blSi,  blSi, blSi*x, blSi,  blSi );
-      drawGrid( blSi*x, -blSi, -blSi, blSi*x, blSi, -blSi );
+      drawGrid( x, -1,  1, x, 1,  1 );
+      drawGrid( x, -1, -1, x, 1, -1 );
     }
 
-    drawGrid( blSi*x,     0, -blSi, blSi*x,     0, blSi );
+    drawGrid( x, 0, -1, x, 0, 1 );
     if ( showOuterGrid ) {
-      drawGrid( blSi*x,  blSi, -blSi, blSi*x,  blSi, blSi );
-      drawGrid( blSi*x, -blSi, -blSi, blSi*x, -blSi, blSi );
+      drawGrid( x,  1, -1, x,  1, 1 );
+      drawGrid( x, -1, -1, x, -1, 1 );
     }
   }
   for( y = -1; y <= 1; y++ ) {
     if ( showOuterGrid || y===0 ) {
-      drawGrid( -blSi*5, blSi*y,     0, blSi*5, blSi*y,     0 );
+      drawGrid( -5, y, 0, 5, y, 0 );
     }
     if ( showOuterGrid ) {
-      drawGrid( -blSi*5, blSi*y,  blSi, blSi*5, blSi*y,  blSi );
-      drawGrid( -blSi*5, blSi*y, -blSi, blSi*5, blSi*y, -blSi );
+      drawGrid( -5, y,  1, 5, y,  1 );
+      drawGrid( -5, y, -1, 5, y, -1 );
     }
   }
 
@@ -208,21 +208,21 @@ function animate( ) {
   if ( showOuterGrid ) {
     // short side grid
     for( x = -5; x <= 5; x++ ) {
-      drawGrid( blSi*x,   -blSi,  blSi, blSi*x,    blSi, blSi ); // top horizontal short
-      drawGrid( blSi*x, blSi*yS, -blSi, blSi*x, blSi*yS, blSi ); // vertical short
+      drawGrid( x, -1,  1, x,  1, 1 ); // top horizontal short
+      drawGrid( x, yS, -1, x, yS, 1 ); // vertical short
     }
     // long top grid
-    drawGrid( -blSi*5,     0,  blSi, blSi*5,     0,  blSi ); // top middle
-    drawGrid( -blSi*5, -blSi,  blSi, blSi*5, -blSi,  blSi ); // top side
-    drawGrid( -blSi*5,  blSi,  blSi, blSi*5,  blSi,  blSi ); // top side
+    drawGrid( -5,  0,  1, 5,  0,  1 ); // top middle
+    drawGrid( -5, -1,  1, 5, -1,  1 ); // top side
+    drawGrid( -5,  1,  1, 5,  1,  1 ); // top side
     // flipping long side grid
-    drawGrid( -blSi*5,  blSi*yS,     0, blSi*5,  blSi*yS,     0 ); // side middle
-    drawGrid( -blSi*5,  blSi*yS, -blSi, blSi*5,  blSi*yS, -blSi ); // side bottom
+    drawGrid( -5,  yS,  0, 5,  yS,  0 ); // side middle
+    drawGrid( -5,  yS, -1, 5,  yS, -1 ); // side bottom
     // missing "front" grid
-    drawGrid( blSi*xS,    -blSi,     0, blSi*xS,     blSi,     0 ); // horizontal middle
-    drawGrid( blSi*xS,        0,  blSi, blSi*xS,        0, -blSi ); // vertical middle
-    drawGrid( blSi*xS, -blSi*yS,  blSi, blSi*xS, -blSi*yS, -blSi ); // vertical flipping 
-    drawGrid( blSi*xS,    -blSi, -blSi, blSi*xS,     blSi, -blSi ); // bottom
+    drawGrid( xS,  -1,  0, xS,   1,  0 ); // horizontal middle
+    drawGrid( xS,   0,  1, xS,   0, -1 ); // vertical middle
+    drawGrid( xS, -yS,  1, xS, -yS, -1 ); // vertical flipping 
+    drawGrid( xS,  -1, -1, xS,   1, -1 ); // bottom
   }
 
   // draw a single ball
@@ -275,9 +275,9 @@ function animate( ) {
     ctx.globalAlpha = 0.4;
     ctx.strokeStyle = 'red';
     ctx.beginPath( );
-    var p0 = project( x0, y0, z0 );
+    var p0 = project( x0*blSi, y0*blSi, z0*blSi );
     ctx.moveTo( p0.x, p0.y );
-    var p1 = project( x1, y1, z1 );
+    var p1 = project( x1*blSi, y1*blSi, z1*blSi );
     ctx.lineTo( p1.x, p1.y );
     ctx.stroke( );
   };
