@@ -1,0 +1,44 @@
+/* Created by Rull Deef 🐺 */
+/* https://code.sololearn.com/W3bBU8i1UX9G */
+
+/* Modified by Modi */
+
+body {
+    margin: 0;
+    font-family: arial;
+    font-size: 0.75em;
+    color: silver;
+    background-color: black;
+}
+
+button {
+    margin: 10;
+    color: silver;
+    background-color: black;
+}
+
+div {
+    padding: 10;
+}
+
+canvas {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: -1;
+}
+
+a {
+    float: right;
+}
+
+span {
+    position: fixed;
+    bottom: 1em;
+}
+
+#options {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
