@@ -1,4 +1,4 @@
-// Browser Me - 2018-07-31 - Created by Modi
+// Browser Me - 2018-08-04 - Created by Modi
 /******************************************************
 Run a SoloLearn code in the Browser.
 *******************************************************/
@@ -13,9 +13,9 @@ Run a SoloLearn code in the Browser.
 // all copies or substantial portions of the Software.
 
 // global variables to store the separate and combined codes
-var __htmlCode = "";  // html code will contain the combined code at the end
-var __cssCode = "";  // css code from SoloLearn
-var __jsCode = "";  // javascript code from SoloLearn
+var __htmlCode = "_nix_";  // html code will contain the combined code at the end
+var __cssCode = "_nix_";  // css code from SoloLearn
+var __jsCode = "_nix_";  // javascript code from SoloLearn
 
 // log a message to desired location
 function __log( message ) {
@@ -29,14 +29,16 @@ function __saveCodeAsBlob( title ) {
     var downloadLink = document.createElement("a");
     downloadLink.download = title + ".html";
     downloadLink.innerHTML = "Download File";
-    if (window.webkitURL !== null) { // Chrome allows the link to be clicked without actually adding it to the DOM.
+    if ( window.webkitURL ) { // Chrome allows the link to be clicked without actually adding it to the DOM.
         downloadLink.href = window.webkitURL.createObjectURL( codeAsBlob );
     } 
-    else { // Firefox requires the link to be added to the DOM before it can be clicked.
+    else if ( window.URL && window.URL.createObjectURL ) { // Firefox requires the link to be added to the DOM before it can be clicked.
         downloadLink.href = window.URL.createObjectURL( codeAsBlob );
-        downloadLink.onclick = destroyClickedElement;
         downloadLink.style.display = "none";
         document.body.appendChild( downloadLink );
+    }
+    else {
+        __log ( 'Error: Could not figure out how to handle the URL...' );
     }
     
     downloadLink.click();
@@ -55,7 +57,7 @@ function __storeCode( language, sourceCode, title ) {
     if ( language == 'js' ) __jsCode = sourceCode;
 
     // check if all codes have been loaded
-    if ( __htmlCode.length > 1 && __cssCode.length > 1 && __jsCode.length > 1 ) {
+    if ( __htmlCode != '_nix_' && __cssCode != '_nix_' && __jsCode != '_nix_' ) {
         __log ( 'Got all codes');
         __htmlCode = __htmlCode.replace( '<\/head>', '<style>\n\n' + __cssCode + '\n\n<\/style><\/head>' );
         __htmlCode = __htmlCode.replace( '<\/body>', '<script>\n\n' + __jsCode + '\n\n<\/script><\/body>' );
@@ -101,9 +103,9 @@ function __getCode( language, codePageOnSoloLearn, title ) {
     });
 }
 
-// load the codes from the SoloLearn codepage
+// load the codes from the SoloLearn code page
 function __loadCodes ( sCodePage, title ) {
-    __htmlCode = __cssCode = __jsCode = ''; // reset the global variables
+    __htmlCode = __cssCode = __jsCode = '_nix_'; // reset the global variables
     __getCode( 'html', sCodePage + '#html', title );
     __getCode( 'css', sCodePage + '#css', title );
     __getCode( 'js', sCodePage + '#js', title );
