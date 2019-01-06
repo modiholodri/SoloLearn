@@ -24,7 +24,10 @@
             <label style='color:yellow'>Resulting Wave</label><br>
             <button onclick="addBall()">Add Ball</button>
             <label id=info></label><br>
-            <span>Phase Shift:<br><input type=range min=0 max=240 value=0 id=phase oninput=resize()></span>
+            <span>Zoom : <input type=range min=1 max=100 value=100 id=zoom oninput=resize()><br>
+                  Angle: <input type=range min=30 max=500 value=100 id=angle oninput=resize()><br>
+                  Phase: <input type=range min=0 max=240 value=0 id=phase oninput=resize()>
+            </span>
             <div id=options>
               <!-- Balls -->
                 <input type=checkbox id=showBalls checked>
@@ -43,7 +46,7 @@
                 <input type=checkbox id=outerGrid>
                 <label for=outerGrid>Outer</label>
                 <input type=checkbox id=innerGrid checked>
-                <label for=innerGrid>Inner</label>
+                <label for=innerGrid>Inner</label>''
                 <input type=checkbox id=showPane checked>
                 <label for=showPane>Pane</label><br>
                 <!-- Animation -->

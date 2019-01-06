@@ -8,7 +8,7 @@ var quality = 1.00;
 
 // rotation angles
 var alpha = Math.PI/6;
-var beta = Math.PI/8;
+var beta = Math.PI/9;
 var sinBeta = Math.sin( beta );
 var cosBeta = Math.cos( beta );
 
@@ -20,8 +20,13 @@ function init( ) {
   canvas.width = width = Math.round( quality * window.innerWidth );
   canvas.height = height = Math.round( quality * window.innerHeight );
   ctx = canvas.getContext( '2d' );
-  blSi = width/10.5;
-  
+  var zoom = $('#zoom').prop('value');
+  var angle = $('#angle').prop('value');
+  blSi = width*9/zoom;
+  beta = Math.PI/angle*10;
+  sinBeta = Math.sin( beta );
+  cosBeta = Math.cos( beta );
+    
   canvas.onmousedown = canvas.ontouchstart = function( event ) {
     startSlide( event.pageX || event.touches[0].pageX );
   };
