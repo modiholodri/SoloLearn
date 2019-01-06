@@ -39,6 +39,7 @@ var waveAlpha = 1;
 var oldFadeWaves = true;
 // photon locations
 var balls = [];
+var drawBallsNow = false;
 addBall( ); // add the first ball
 
 // add another ball
@@ -113,15 +114,18 @@ function animate( ) {
     toX = -toX;
   }
 
-  
+  // move the balls forward
   for( var i=0; i<balls.length; i++) {
       balls[i].xP += 0.1;
       if ( balls[i].xP >= 5 ) balls[i].xP = -5;
       balls[i].drawnAlready = false;
   }
+
   var xW = 0; // x for the waves
   // document.querySelector( '#info' ).innerText = 'cosAlpha ' + cosAlpha;
   // document.querySelector( '#info' ).innerText = 'fromX ' + fromX + '  xP ' + xP + '  dA ' + drawnAlready;  
+  // drawBall( 5*blSi, blSi,  blSi, 'grey' ); // reference ball
+
   // draw the waves
   for( xW = fromX; (fromX<0 && xW<=toX) || (fromX>0 && xW>=toX); xW += stepX ) {
     var xN = xW*blSi; 
@@ -136,76 +140,58 @@ function animate( ) {
     if ( fadeWaves ) waveAlpha = 1-(xW+5)/10;
     else if ( fadeWaves != oldFadeWaves ) waveAlpha = 1-(balls[0].xP+5)/10;
     oldFadeWaves = fadeWaves;
-    ctx.globalAlpha = waveAlpha;
     
     var zA = zO + zN;
     var yA = yO + yN;
-    
+
+    // check if a balls should be drawn
+    drawBallsNow = false;
+    for( var i=0; i<balls.length; i++ ) {
+      if ( !balls[i].drawnAlready && 
+         ( ( fromX<0 && xW >= balls[i].xP ) || ( fromX>0 && xW <= balls[i].xP ) ) ) {
+        balls[i].drawnAlready = true;
+        drawPane( xN );
+        drawBallsNow = true;
+      }
+    }
+  
     if ( cosAlpha > 0 ) {
-      if ( zA>0 ) { // ++ electric
-        if ( yA>0 ) { // ++electric ++magnetic
-          drawWave( xO, yO, 0, xN, yN, 0, 'blue' ); // magnetic
-          drawWave( xO, yO, zO, xN, yN, zN, 'yellow' ); // result
-          drawWave( xO, 0, zO, xN, 0, zN, 'green' ); // electric    
+      if ( zA>0 ) { // ++green
+        if ( yA>0 ) { // ++green ++blue
+          drawIt( xO, yO, zO, xN, yN, zN, [ 'yellow', 'blue', 'green' ] );
         }
-        else { // ++electric --magnetic
-          drawWave( xO, 0, zO, xN, 0, zN, 'green' ); // electric
-          drawWave( xO, yO, zO, xN, yN, zN, 'yellow' ); // result
-          drawWave( xO, yO, 0, xN, yN, 0, 'blue' ); // magnetic
+        else { // ++green --blue
+          drawIt( xO, yO, zO, xN, yN, zN, [ 'green', 'yellow', 'blue' ] );
         }
       }
-      else { // --electric 
-        if ( yA>0 ) { // --electric ++magnetic
-          drawWave( xO, yO, zO, xN, yN, zN, 'yellow' ); // result
-          drawWave( xO, yO, 0, xN, yN, 0, 'blue' ); // magnetic
-          drawWave( xO, 0, zO, xN, 0, zN, 'green' ); // electric   
+      else { // --green 
+        if ( yA>0 ) { // --green ++blue
+          drawIt( xO, yO, zO, xN, yN, zN, [ 'blue', 'yellow', 'green' ] );
         }
-        else { // --electric --magnetic
-          drawWave( xO, 0, zO, xN, 0, zN, 'green' ); // electric
-          drawWave( xO, yO, zO, xN, yN, zN, 'yellow' ); // result
-          drawWave( xO, yO, 0, xN, yN, 0, 'blue' ); // magnetic
+        else { // --green --blue
+          drawIt( xO, yO, zO, xN, yN, zN, [ 'green', 'blue', 'yellow' ] );
         }
       }
     }
     else {
-      if ( zA>0 ) { // ++ electric
-        if ( yA>0 ) { // ++electric ++magnetic
-          drawWave( xO, yO, 0, xN, yN, 0, 'blue' ); // magnetic
-          drawWave( xO, 0, zO, xN, 0, zN, 'green' ); // electric    
-          drawWave( xO, yO, zO, xN, yN, zN, 'yellow' ); // result
+      if ( zA>0 ) { // ++green
+        if ( yA>0 ) { // ++green ++blue
+          drawIt( xO, yO, zO, xN, yN, zN, [ 'green', 'yellow', 'blue' ] );
         }
-        else { // ++electric --magnetic
-          drawWave( xO, yO, 0, xN, yN, 0, 'blue' ); // magnetic
-          drawWave( xO, yO, zO, xN, yN, zN, 'yellow' ); // result
-          drawWave( xO, 0, zO, xN, 0, zN, 'green' ); // electric
+        else { // ++green --blue
+          drawIt( xO, yO, zO, xN, yN, zN, [ 'yellow', 'green', 'blue' ] );
         }
       }
-      else { // --electric 
-        if ( yA>0 ) { // --electric ++magnetic
-          drawWave( xO, 0, zO, xN, 0, zN, 'green' ); // electric   
-          drawWave( xO, yO, zO, xN, yN, zN, 'yellow' ); // result
-          drawWave( xO, yO, 0, xN, yN, 0, 'blue' ); // magnetic
+      else { // --green 
+        if ( yA>0 ) { // --green ++blue
+          drawIt( xO, yO, zO, xN, yN, zN, [ 'blue', 'green', 'yellow' ] );
         }
-        else { // --electric --magnetic
-          drawWave( xO, yO, 0, xN, yN, 0, 'blue' ); // magnetic
-          drawWave( xO, yO, zO, xN, yN, zN, 'yellow' ); // result
-          drawWave( xO, 0, zO, xN, 0, zN, 'green' ); // electric
+        else { // --green --blue
+          drawIt( xO, yO, zO, xN, yN, zN, [ 'blue', 'yellow', 'green' ] );
         }
       }
     }
  
-    for( var i=0; i<balls.length; i++ ) {
-        if ( !balls[i].drawnAlready && 
-           ( ( fromX<0 && xW >= balls[i].xP ) || ( fromX>0 && xW <= balls[i].xP ) ) ) {
-          balls[i].drawnAlready = true;
-          drawPane( xN );
-          ctx.globalAlpha = 1;
-          drawBall( xN, yN,  0, 'blue' );
-          drawBall( xN,  0, zN, 'green' );
-          drawBall( xN, yN, zN, 'yellow' );
-        }
-    }
-    
     // remember the old stuff
     xO = xN;
     yO = yN;
@@ -237,16 +223,28 @@ function animate( ) {
     drawGrid( xS,  -1, -1, xS,   1, -1 ); // bottom
   }
 
+  function drawIt( xO, yO, zO, xN, yN, zN, colors ) {
+    drawWaves( xO, yO, zO, xN, yN, zN, colors );
+    if ( drawBallsNow ) drawBalls( xN, yN, zN, colors );
+  }
+
+  function drawBalls( xN, yN, zN, colors ) {
+    if ( !showBalls ) return;
+    ctx.globalAlpha = 1;
+    for( var i=0; i<colors.length; i++) {
+      if ( colors[i] == 'blue' )        drawBall( xN, yN,  0, 'blue' ); // magnetic
+      else if ( colors[i] == 'green' )  drawBall( xN,  0, zN, 'green' ); // electric
+      else if ( colors[i] == 'yellow' ) drawBall( xN, yN, zN, 'yellow' ); // result
+    }
+  }
+
   // draw a single ball
   function drawBall( xN, yN, zN, color ) {
-
-    if ( !showBalls ) return;
-
     ctx.beginPath( );
-    // new one
     var radius = 0.1;
     if ( shrinkBalls ) radius = radius * Math.sqrt( yN*yN + zN*zN );
     else radius = radius * blSi;
+    radius = radius * (xN+5*blSi)/10/blSi
     var p7 = project( xN, yN, zN );
     ctx.arc( p7.x, p7.y, radius, 0, 2 * Math.PI );
 
@@ -254,13 +252,19 @@ function animate( ) {
     ctx.fill( );
   };
   
+  function drawWaves( xO, yO, zO, xN, yN, zN, colors ) {
+    if ( !showWaves ) return;
+    ctx.globalAlpha = waveAlpha;
+    for( var i=0; i<colors.length; i++) {
+      if ( colors[i] === 'blue' )        drawWave( xO, yO,  0, xN, yN,  0, 'blue' ); // magnetic
+      else if ( colors[i] === 'green' )  drawWave( xO,  0, zO, xN,  0, zN, 'green' ); // electric
+      else if ( colors[i] === 'yellow' ) drawWave( xO, yO, zO, xN, yN, zN, 'yellow' ); // result
+    }
+  }
+
   // draw part of a wave
   function drawWave( xO, yO, zO, xN, yN, zN, color ) {
-
-    if ( !showWaves ) return;
-    
     ctx.beginPath( );
-    // point zero
     var p0 = project( xO, 0, 0 );
     ctx.moveTo( p0.x, p0.y );
     // old point
@@ -316,11 +320,39 @@ function animate( ) {
     ctx.fill( );
   };
   
+
+  // ----------------------------------------
+  // Formula to solve Sx and Sy
+  // ----------------------------------------
+  // Ez = distance from eye to the center of the screen
+  // Ex = X coordinate of the eye
+  // Ey = Y coordinate of the eye
+  // Px = X coordinate of the 3D point
+  // Py = Y coordinate of the 3D point
+  // Pz = Z coordinate of the 3D point
+  //
+  //              Ez*(Px-Ex)
+  // Sx  = -----------------------  + Ex  
+  //                Ez+Pz
+  // S.x = (eye.z * (P.x-eye.x)) / (eye.z + P.z) + eye.x;
+  //
+  //            Ez*(Py-Ey)
+  // Sy  = -------------------  + Ey     
+  //              Ez+Pz
+  // S.y = (eye.z * (P.y-eye.y)) / (eye.z + P.z) + eye.y;
+
+  // x: width/2 + x*cosAlpha - y*sinAlpha,
+  // y: height/2 - ( x*sinAlpha + y*cosAlpha )*sinBeta - z*cosBeta
+
   // put it in perspective
   function project( x, y, z ) {
+    y = y * (x+5*blSi)/10/blSi;
+    z = z * (x+5*blSi)/10/blSi;
+    var x2 = x*cosAlpha - y*sinAlpha;
+    var y2 = ( x*sinAlpha + y*cosAlpha )*sinBeta - z*cosBeta;
     return {
-      x: width/2 + x*cosAlpha - y*sinAlpha,
-      y: height/2 - ( x*sinAlpha + y*cosAlpha )*sinBeta - z*cosBeta
+      x: width/2 + x2,
+      y: height/2 - y2
     }
   };
 }
