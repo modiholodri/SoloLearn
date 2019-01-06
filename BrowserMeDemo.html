@@ -57,11 +57,37 @@ pre {
                 </div>
                 <div id='navbar' class='navbar-collapse collapse'>
                     <ul class='nav navbar-nav'>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">SoloLearn Codes<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a codePage="https://code.sololearn.com/W2bHKhOjK20O/" 
+                                    class="SLCode" href="#">I love SoloLearn by Calvin</a></li>
+                                <li><a codePage="https://code.sololearn.com/WPqyXuhKLWbu/" 
+                                    class="SLCode" href="#">Hypocycloid by Haris</a></li>
+                                <li><a codePage="https://code.sololearn.com/W52uCChLosPF/" 
+                                    class="SLCode" href="#">Parametric Plot by Haris</a></li>
+                                <li><a codePage="https://code.sololearn.com/WbUq9x4LTGRt/" 
+                                    class="SLCode" href="#">Debased by r8w9</a></li>
+                                <li><a codePage="https://code.sololearn.com/WoCcpvg5YeHQ/" 
+                                    class="SLCode" href="#">Burger by r8w9</a></li>
+                                <li><a codePage="https://code.sololearn.com/WbfYLO4y4ctq/" 
+                                    class="SLCode" href="#">Riddle Master by Golden Panda</a></li>
+                                <li><a codePage="https://code.sololearn.com/W4NF48m3gNAA/" 
+                                    class="SLCode" href="#">Unit Converter by Golden Panda</a></li>
+                                <li><a codePage="https://code.sololearn.com/WhplPXfA0Qmn/" 
+                                    class="SLCode" href="#">Basic Calculator by Golden Panda</a></li>
+                                <li><a codePage="https://code.sololearn.com/WhTuS1itbMXt/" 
+                                    class="SLCode" href="#">Graffiti Cube 2 by embi</a></li>
+                                <li><a codePage="https://code.sololearn.com/WlYFjJeFLj7W/" 
+                                    class="SLCode" href="#">VR 3D Gravity by Paul Caron</a></li>
+                            </ul>
+                        </li>
                         <li><a href="https://movie-file-merger.org/SoloLearn/BrowserMeDemo.html" target="_blank">In Browser</a></li>
                         <li class='dropdown'>
                             <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button'>Browser Me Include<span class='caret'></span></a>
                             <ul class='dropdown-menu'>
-                                <li><a href='#' id='about'>About</a></li>
+                                <li><a codePage="https://code.sololearn.com/cl4uwVljb5jP/#rb" 
+                                        codeLanguage="markdown" class="SLCode" href="#">About Browser Me Include</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -86,7 +112,7 @@ pre {
         
     <script>
 
-// Browser Me Demo - 2018-07-29 - Created by Modi
+// Browser Me Demo - 2018-07-31 - Created by Modi
 /******************************************************
 Run a SoloLearn code in the Browser.
 *******************************************************/
@@ -100,13 +126,24 @@ Run a SoloLearn code in the Browser.
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
 
+
+// set the callback for each object
+function setCallbacks(  ) { 
+    $( '.SLCode' ).each( function ( ) {
+        $( this ).on( 'click', function( ) { 
+            __loadCodes( $ ( this ).attr( 'codePage' ), $( this ).text() );
+        });
+    });
+}
+
 // document is loaded just do some stuff instead of the real application
 $( document ).ready( function( ) {
+    setCallbacks( ); 
     $( '#about' ).on( 'click', function( ) {  // set the call back function
-        __getCode( 'markdown', 'https://code.sololearn.com/cl4uwVljb5jP/#rb' );
+        __getCode( 'markdown', 'https://code.sololearn.com/cl4uwVljb5jP/#rb', 'About' );
     });
 
-    __getCode( 'markdown', 'https://code.sololearn.com/cl4uwVljb5jP/#rb' ); // load About at start
+    __getCode( 'markdown', 'https://code.sololearn.com/cl4uwVljb5jP/#rb', 'About' ); // load About at start
 });
 
 </script></body>        
