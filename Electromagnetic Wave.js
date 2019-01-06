@@ -52,12 +52,14 @@ function animate( ) {
   
   // get the settings
   var phase = Math.PI/120 * $('#phase').prop('value');
-  var showBalls = $('#balls').prop('checked');
+  var showBalls = $('#showBalls').prop('checked');
   var shrinkBalls = $('#shrinkBalls').prop('checked');
-  var showWaves = $('#waves').prop('checked');
+  var showWaves = $('#showWaves').prop('checked');
   var fadeWaves = $('#fadeWaves').prop('checked');
+  var fillWaves = $('#fillWaves').prop('checked');
   var showOuterGrid = $('#outerGrid').prop('checked');
-  var showPane = $('#pane').prop('checked');
+  var showInnerGrid = $('#innerGrid').prop('checked');
+  var showPane = $('#showPane').prop('checked');
   // shift the time or not
   var tN = 0;
   if ( $('#shiftTime').prop('checked') ) tN = Date.now( )/5e2;
@@ -68,24 +70,26 @@ function animate( ) {
   
   // draw the grid
   var x, y;
-  for( x = -5; x <= 5; x++ ) {
-    drawGrid( x, -1, 0, x, 1, 0 );
-    if ( showOuterGrid ) {
+  if ( showInnerGrid ) {
+    for( x = -4; x <= 4; x++ ) {
+      drawGrid( x, -1, 0, x, 1, 0 ); // middle horizontal
+      drawGrid( x, 0, -1, x, 0, 1 ); // middle vertical
+    }
+    drawGrid( -5, 0, 0, 5, 0, 0 ); // the center line
+  }
+  if ( showOuterGrid ) {
+    for( x = -5; x <= 5; x++ ) {
       drawGrid( x, -1,  1, x, 1,  1 );
       drawGrid( x, -1, -1, x, 1, -1 );
-    }
-
-    drawGrid( x, 0, -1, x, 0, 1 );
-    if ( showOuterGrid ) {
       drawGrid( x,  1, -1, x,  1, 1 );
       drawGrid( x, -1, -1, x, -1, 1 );
     }
-  }
-  for( y = -1; y <= 1; y++ ) {
-    if ( showOuterGrid || y===0 ) {
-      drawGrid( -5, y, 0, 5, y, 0 );
-    }
-    if ( showOuterGrid ) {
+    drawGrid(  5, -1, 0,  5, 1, 0 ); // middle horizontal
+    drawGrid(  5, 0, -1,  5, 0, 1 ); // middle vertical
+    drawGrid( -5, -1, 0, -5, 1, 0 ); // middle horizontal
+    drawGrid( -5, 0, -1, -5, 0, 1 ); // middle vertical
+    for( y = -1; y <= 1; y++ ) {
+      if ( y !== 0 ) drawGrid( -5, y,  0, 5, y, 0 );
       drawGrid( -5, y,  1, 5, y,  1 );
       drawGrid( -5, y, -1, 5, y, -1 );
     }
@@ -261,13 +265,15 @@ function animate( ) {
     ctx.strokeStyle = color;   
     ctx.stroke( );
     
-    // back to the roots
-    var p4 = project( xN, 0, 0 );
-    ctx.lineTo( p4.x, p4.y );
+    if ( fillWaves ) {
+      // back to the roots
+      var p4 = project( xN, 0, 0 );
+      ctx.lineTo( p4.x, p4.y );
 
-    // fill it
-    ctx.fillStyle = color;
-    ctx.fill( );
+      // fill it
+      ctx.fillStyle = color;
+      ctx.fill( );
+    }
   };
   
   // draw a simple grid line

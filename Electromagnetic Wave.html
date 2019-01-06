@@ -26,18 +26,27 @@
             <label id=info></label><br>
             <span>Phase Shift:<br><input type=range min=0 max=240 value=0 id=phase oninput=resize()></span>
             <div id=options>
-                <input type=checkbox id=balls checked>
-                <label for=balls>Balls</label>
+              <!-- Balls -->
+                <input type=checkbox id=showBalls checked>
+                <label for=showBalls>Balls</label>
                 <input type=checkbox id=shrinkBalls checked>
                 <label for=shrinkBalls>Shrink</label><br>
-                <input type=checkbox id=waves checked>
-                <label for=waves>Waves</label>
+                <!-- Waves -->
+                <input type=checkbox id=showWaves checked>
+                <label for=showWaves>Waves</label>
                 <input type=checkbox id=fadeWaves checked>
-                <label for=fadeWaves>Fade</label><br>
+                <label for=fadeWaves>Fade</label>
+                <input type=checkbox id=fillWaves>
+                <label for=fillWaves>Fill</label><br>
+                <!-- Grid -->
+                <label>Grid</label>
                 <input type=checkbox id=outerGrid>
-                <label for=outerGrid>Outer Grid</label>
-                <input type=checkbox id=pane checked>
-                <label for=pane>Pane</label><br>
+                <label for=outerGrid>Outer</label>
+                <input type=checkbox id=innerGrid checked>
+                <label for=innerGrid>Inner</label>
+                <input type=checkbox id=showPane checked>
+                <label for=showPane>Pane</label><br>
+                <!-- Animation -->
                 <input type=checkbox id=rotate checked>
                 <label for=rotate>Rotate</label>
                 <input type=checkbox id=shiftTime>
