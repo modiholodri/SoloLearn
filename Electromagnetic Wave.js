@@ -40,9 +40,17 @@ var oldFadeWaves = true;
 // photon locations
 var balls = [];
 addBall( ); // add the first ball
+
 // add another ball
 function addBall( ) {
-    balls.push( { xP: -5, drawnAlready: false } );
+  var existAlready = false
+  for( var i=0; i<balls.length; i++) {
+    if ( balls[i].xP == -5 ) {
+      existAlready = true;
+      break;
+    }
+  }
+  if ( !existAlready ) balls.push( { xP: -5, drawnAlready: false } );
 }
 
 var request;
@@ -106,7 +114,7 @@ function animate( ) {
   }
 
   
-  for( i=0; i<balls.length; i++) {
+  for( var i=0; i<balls.length; i++) {
       balls[i].xP += 0.1;
       if ( balls[i].xP >= 5 ) balls[i].xP = -5;
       balls[i].drawnAlready = false;
@@ -186,7 +194,7 @@ function animate( ) {
       }
     }
  
-    for( i=0; i<balls.length; i++ ) {
+    for( var i=0; i<balls.length; i++ ) {
         if ( !balls[i].drawnAlready && 
            ( ( fromX<0 && xW >= balls[i].xP ) || ( fromX>0 && xW <= balls[i].xP ) ) ) {
           balls[i].drawnAlready = true;
