@@ -1,0 +1,111 @@
+/* Created by dρlυѕρlυѕ */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:200|Quicksand:300|Railway');
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: #000;
+}
+
+.menu_button {
+  width: 40px;
+  height: 30px;
+  position: fixed;
+ /* float: left;*/
+  right: 40px; top: 40px;
+  z-index: 111;
+}
+ .menu_button span {
+   width: 100%;
+   float: left;
+   height: 4.5px;
+   background-color: #96998b;
+   margin-top: 6px;
+   transition: 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+  }
+
+/* button icon bars' height */
+.menu_button:hover > span {
+  background-color: #6b724f;
+  outline: none;
+}
+.menu_button > span:first-child {
+    transform: translateY(-30%);
+}
+
+.menu_button > span:last-child {
+    transform: translateY(30%);
+}
+
+/* button bars hover animation */
+.menu_button:hover span:nth-child(1) {
+    transform: translateY(-100%);
+}
+.menu_button:hover span:nth-child(3) {
+    transform: translateY(100%);
+}
+
+/* button onclick animation */
+.menu_button.show span:nth-child(1) {
+  -webkit-transform: rotate(45deg) translateY(-50%);
+  transform: rotate(45deg) translate(8px, 8px);
+  outline: none;
+}
+.menu_button.show span:nth-child(2) {
+  -webkit-transform: rotate(45deg) translateY(-50%);
+  transform: rotate(45deg) translate(9px, 8px);
+  opacity: 0;
+  outline: none;
+}
+.menu_button.show span:nth-child(3) {
+  -webkit-transform: rotate(-45deg) translateY(-50%);
+  transform: rotate(-45deg) translate(7px, -7px);
+  outline: none;
+}
+
+/* section links */
+.menu_sections {
+  opacity: 0;
+  padding: 10px 70px;
+  display: inline-block;
+  text-align: right;
+  width: 60%;
+  vertical-align: middle !important;
+  position: fixed;
+}
+.show + ul {
+  visibility: visible;
+}
+
+.menu_sections.show {
+  opacity: 1;
+  padding-bottom: 8em;
+  overflow: hidden !important;
+  visibility: visible !important;
+  line-height: 2.5em !important;
+  transition: opacity 550ms ease-in-out;
+  -webkit-transition: opacity 550ms ease-in-out;
+}
+.menu_sections.show  label {
+  color: #96998b;
+  outline: none;
+  list-style: none !important;
+}
+
+.menu_sections.show label  {
+  list-style: none;
+  text-align: right !important;
+  cursor: pointer;
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.0em;
+  text-transform: lowercase;
+}
+.menu_sections.show label:hover {
+   color: #6b724f !important;
+   font-weight: 800 !important;
+   font-size: 1.4em !important;
+   transition: .5s ease;
+    -webkit-transition: .5s ease;
+}
