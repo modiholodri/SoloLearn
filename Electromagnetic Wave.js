@@ -325,30 +325,6 @@ function animate( ) {
     ctx.fill( );
   };
   
-
-  // ----------------------------------------
-  // Formula to solve Sx and Sy
-  // ----------------------------------------
-  // Ez = distance from eye to the center of the screen
-  // Ex = X coordinate of the eye
-  // Ey = Y coordinate of the eye
-  // Px = X coordinate of the 3D point
-  // Py = Y coordinate of the 3D point
-  // Pz = Z coordinate of the 3D point
-  //
-  //              Ez*(Px-Ex)
-  // Sx  = -----------------------  + Ex  
-  //                Ez+Pz
-  // S.x = (eye.z * (P.x-eye.x)) / (eye.z + P.z) + eye.x;
-  //
-  //            Ez*(Py-Ey)
-  // Sy  = -------------------  + Ey     
-  //              Ez+Pz
-  // S.y = (eye.z * (P.y-eye.y)) / (eye.z + P.z) + eye.y;
-
-  // x: width/2 + x*cosAlpha - y*sinAlpha,
-  // y: height/2 - ( x*sinAlpha + y*cosAlpha )*sinBeta - z*cosBeta
-
   // put it in perspective
   function project( x, y, z ) {
     y = y * (x+5*blSi)/10/blSi;
@@ -447,4 +423,12 @@ $( document ).ready( function( ) {
     else { // no clue where the code is running
         alert ( 'I have no clue where I am running...' );
     }
+
+    // Hamburger Menu Created by dρlυѕρlυѕ
+    setTimeout( function() { 
+      $( '.menu_button' ).click( function() {
+        $( this ).toggleClass( 'show' );
+        $( '.menu_sections' ).toggleClass( 'show' );
+      });
+    }, 600);
 });

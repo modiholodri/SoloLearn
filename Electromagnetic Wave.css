@@ -12,13 +12,17 @@ body {
 }
 
 button {
-    margin: 10;
-    color: silver;
+    margin: 10px 20px;
+    color: gray;
     background-color: black;
 }
 
 div {
-    padding: 10;
+    padding: 20px 20px;
+}
+
+p {
+    margin: 10px 20px;
 }
 
 canvas {
@@ -28,17 +32,97 @@ canvas {
     z-index: -1;
 }
 
-a {
-    float: right;
+/* Hamburger Menu Created by dρlυѕρlυѕ */
+
+.menu_button {
+  width: 40px;
+  height: 30px;
+  position: fixed;
+  float: left;
+  right: 30px; 
+  top: 30px;
+  z-index: 111;
+}
+ .menu_button span {
+   width: 100%;
+   float: left;
+   height: 4.5px;
+   background-color: gray;
+   margin-top: 6px;
+   transition: 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+  }
+
+/* button icon bars' height */
+.menu_button:hover > span {
+  background-color: silver;
+  outline: none;
+}
+.menu_button > span:first-child {
+    transform: translateY(-30%);
 }
 
-span {
-    position: fixed;
-    bottom: 1em;
+.menu_button > span:last-child {
+    transform: translateY(30%);
 }
 
-#options {
-    position: fixed;
-    bottom: 0;
-    right: 0;
+/* button bars hover animation */
+.menu_button:hover span:nth-child(1) {
+    transform: translateY(-100%);
+}
+.menu_button:hover span:nth-child(3) {
+    transform: translateY(100%);
+}
+
+/* button onclick animation */
+.menu_button.show span:nth-child(1) {
+  -webkit-transform: rotate(45deg) translateY(-50%);
+  transform: rotate(45deg) translate(8px, 8px);
+  outline: none;
+}
+.menu_button.show span:nth-child(2) {
+  opacity: 0;
+  outline: none;
+}
+.menu_button.show span:nth-child(3) {
+  -webkit-transform: rotate(-45deg) translateY(-50%);
+  transform: rotate(-45deg) translate(7px, -7px);
+  outline: none;
+}
+
+/* section links */
+.menu_sections {
+  opacity: 0;
+  padding: 10px 60px 10px 10px;
+  display: inline-block;
+  text-align: right;
+  vertical-align: middle !important;
+  position: fixed;
+  right: 70px; 
+  top: 30px;
+  z-index: -111;
+}
+
+.menu_sections.show {
+  opacity: 1;
+  overflow: hidden !important;
+  visibility: visible !important;
+  z-index: 110;
+  transition: opacity 550ms ease-in-out;
+  -webkit-transition: opacity 550ms ease-in-out;
+}
+.menu_sections.show label {
+  color: gray;
+  outline: none;
+  text-align: right !important;
+  cursor: pointer;
+  font-size: 1.2em;
+  line-height: 2em !important;
+}
+.menu_sections.show label:hover {
+   color: silver !important;
+   font-weight: 800 !important;
+   font-size: 1.4em !important;
+   transition: .5s ease;
+    -webkit-transition: .5s ease;
 }
