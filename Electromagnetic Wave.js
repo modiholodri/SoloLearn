@@ -9,30 +9,55 @@ var quality = 1.00;
 // rotation angles
 var alpha = Math.PI/6;
 var beta = Math.PI/9;
-var sinBeta = Math.sin( beta );
-var cosBeta = Math.cos( beta );
+var angle = 100;
+var mouseIsDown = false;
+
+var rotationSpeed = 2;
 
 // setup the canvas
 var width, height, ctx;
 var blSi;  // block size
+
+// something changed in the settings init everything
 function init( ) {
   var canvas = $( 'canvas' )[0];
   canvas.width = width = Math.round( quality * window.innerWidth );
   canvas.height = height = Math.round( quality * window.innerHeight );
   ctx = canvas.getContext( '2d' );
   var zoom = $('#zoom').prop('value');
-  var angle = $('#angle').prop('value');
   blSi = width*9/zoom;
-  beta = Math.PI/angle*10;
-  sinBeta = Math.sin( beta );
-  cosBeta = Math.cos( beta );
+  rotationSpeed = $('#rotationSpeed').prop('value')/10;
     
-  canvas.onmousedown = canvas.ontouchstart = function( event ) {
+  // handle the touch stuff
+  canvas.ontouchstart = function( event ) {
     startSlide( event.pageX || event.touches[0].pageX );
+    startSlideY( event.pageY || event.touches[0].pageY );
   };
-  
-  canvas.onmouseup = canvas.ontouchmove = function( event ) {
+  canvas.ontouchmove = function( event ) {
     slideTo( event.pageX || event.touches[0].pageX );
+    slideYTo( event.pageY || event.touches[0].pageY );
+  };
+
+  // handle the mouse drag stuff
+  canvas.onmousedown = function( event ) {
+    startSlide( event.pageX || event.touches[0].pageX );
+    startSlideY( event.pageY || event.touches[0].pageY );
+    mouseIsDown = true;
+  };
+  canvas.onmouseleave = canvas.onmouseup = function( event ) {
+    mouseIsDown = false;
+  };
+  canvas.onmousemove = function( event ) {
+    if ( mouseIsDown ) {
+      slideTo( event.pageX || event.touches[0].pageX );
+      slideYTo( event.pageY || event.touches[0].pageY );
+    }
+  };
+
+  // handle the mouse click stuff
+  canvas.onclick = canvas.ondblclick = function( event ) {
+    addBall( ); // add a ball
+    mouseIsDown = false;
   };
 
   animate( );
@@ -76,12 +101,15 @@ function animate( ) {
   var showPane = $('#showPane').prop('checked');
   // shift the time or not
   var tN = 0;
-  if ( $('#shiftTime').prop('checked') ) tN = Date.now( )/5e2;
+  if ( $('#shiftWave').prop('checked') ) tN = Date.now( )/5e2;
   // rotate the whole thing or not
-  if( $( '#rotate' ).prop('checked') ) slide( 1 );
+  if( $( '#rotate' ).prop('checked') ) slide( 1 * rotationSpeed );
+  
   var cosAlpha = Math.cos( alpha );
   var sinAlpha = Math.sin( alpha );
-  
+  var sinBeta = Math.sin( beta );
+  var cosBeta = Math.cos( beta );
+
   // draw the grid
   var x, y;
   if ( showInnerGrid ) {
@@ -129,6 +157,7 @@ function animate( ) {
   var xW = 0; // x for the waves
   // document.querySelector( '#info' ).innerText = 'cosAlpha ' + cosAlpha;
   // document.querySelector( '#info' ).innerText = 'fromX ' + fromX + '  xP ' + xP + '  dA ' + drawnAlready;  
+  //document.querySelector( '#info' ).innerText = 'Alpha ' + alpha + '  Beta ' + beta + '  StartX ' + startX + '  StartY ' + startY ;
   // drawBall( 5*blSi, blSi,  blSi, 'grey' ); // reference ball
 
   // draw the waves
@@ -344,21 +373,43 @@ function resize( ) {
   init( );
 };
 
-// sliding motion
-var slideX;
+// sliding X motion
+var startX;
 function startSlide( x ) {
-  slideX = x;
+  startX = x;
 };
 
-// slide it
+// slide it X
 function slideTo( x ) {
-  var dx = x - slideX;
-  slideX = x;
+  var dx = x - startX;
+  startX = x;
   slide( dx );
 };
 
+// change Alpha
 function slide( dx ) {
   alpha += dx/200;
+};
+
+// sliding Y motion
+var startY;
+function startSlideY( y ) {
+  startY = y;
+};
+
+// slide it Y
+function slideYTo( y ) {
+  var dy = y - startY;
+  startY = y;
+  slideY( dy );
+};
+
+// change Beta
+function slideY( dy ) {
+  angle += dy;
+  if ( angle < 30 ) angle = 30;
+  if ( angle > 500 ) angle = 500;
+  beta = Math.PI/angle*10;
 };
 
 // Full Screen Part - 2018-10-06 - Created by Modi
@@ -426,9 +477,9 @@ $( document ).ready( function( ) {
 
     // Hamburger Menu Created by dρlυѕρlυѕ
     setTimeout( function() { 
-      $( '.menu_button' ).click( function() {
+      $( '.menuButton' ).click( function() {
         $( this ).toggleClass( 'show' );
-        $( '.menu_sections' ).toggleClass( 'show' );
+        $( '.menuSections' ).toggleClass( 'show' );
       });
     }, 600);
 });

@@ -1,7 +1,7 @@
-<!-- Created by Rull Deef 🐺 -->
-<!-- https://code.sololearn.com/W3bBU8i1UX9G -->
-
 <!-- Modified by Modi -->
+
+<!-- Original created by Rull Deef 🐺 -->
+<!-- https://code.sololearn.com/W3bBU8i1UX9G -->
 
 <!DOCTYPE html>
 <html>
@@ -17,12 +17,12 @@
   <script src='Electromagnetic Wave.js'></script>    
 </head>
 <body onload=init() onresize=resize()>
-  <nav class="menu_button">
+  <nav class="menuButton">
     <span></span>
     <span></span>
     <span></span>
   </nav>
-    <span class="menu_sections">
+    <span class="menuSections">
       <!-- Waves -->
       <input type=range min=0 max=240 value=0 id=phase oninput=resize()><br>
       <label for=showWaves>Show Waves</label>
@@ -31,6 +31,8 @@
       <input type=checkbox id=fadeWaves checked><br>
       <label for=fillWaves>Fill Waves</label>
       <input type=checkbox id=fillWaves><br>
+      <label for=shiftWave>Shift Wave</label>
+      <input type=checkbox id=shiftWave><br>
       <!-- Balls -->
       <label for=showBalls>Show Balls</label>  
       <input type=checkbox id=showBalls checked><br>
@@ -46,10 +48,8 @@
       <input type=checkbox id=innerGrid checked><br>
       <!-- Animation -->
       <label for=rotate>Rotate</label>
-      <input type=checkbox id=rotate checked><br>
-      <label for=shiftTime>Shift Time</label>
-      <input type=checkbox id=shiftTime><br>
-      <input type=range min=30 max=500 value=100 id=angle oninput=resize()><br>
+      <input type=checkbox id=rotate><br>
+      <input type=range min=10 max=200 value=20 id=rotationSpeed oninput=resize()><br>
       <!-- Other Stuff -->
       <p style="text-align:center">
         <a href='https://en.m.wikipedia.org/wiki/Electromagnetic_radiation' target="_blank">Electromagnetic<br>Waves on Wikipedia</a>
