@@ -31,39 +31,34 @@
       <input type=checkbox id=fadeWaves checked><br>
       <label for=fillWaves>Fill Waves</label>
       <input type=checkbox id=fillWaves><br>
-      <hr>
       <!-- Balls -->
       <label for=showBalls>Show Balls</label>  
       <input type=checkbox id=showBalls checked><br>
       <label for=shrinkBalls>Shrink Balls</label>
       <input type=checkbox id=shrinkBalls checked><br>
-      <label for=showPane>Show Pane</label>
-      <input type=checkbox id=showPane checked><br>
-      <hr>
       <!-- Grid -->
       <input type=range min=1 max=100 value=70 id=zoom oninput=resize()><br>
+      <label for=showPane>Show Pane</label>
+      <input type=checkbox id=showPane checked><br>
       <label for=outerGrid>Outer Grid</label>
       <input type=checkbox id=outerGrid><br>
       <label for=innerGrid>Inner Grid</label>
       <input type=checkbox id=innerGrid checked><br>
-      <hr>
       <!-- Animation -->
       <label for=rotate>Rotate</label>
       <input type=checkbox id=rotate checked><br>
       <label for=shiftTime>Shift Time</label>
       <input type=checkbox id=shiftTime><br>
       <input type=range min=30 max=500 value=100 id=angle oninput=resize()><br>
-      <hr>
       <!-- Other Stuff -->
-      <a href='https://en.m.wikipedia.org/wiki/Electromagnetic_radiation' target="_blank">Electromagnetic<br>Waves on Wiki</a>
+      <p style="text-align:center">
+        <a href='https://en.m.wikipedia.org/wiki/Electromagnetic_radiation' target="_blank">Electromagnetic<br>Waves on Wikipedia</a>
+      </p>
     </span>
 
   <canvas></canvas>
 
-  <p style='color:yellow'>Resulting Wave</p>
-  <p style='color:blue'>Magnetic</p>
-  <p style='color:green'>Electric</p>
-  <button onclick="addBall()">Add Ball</button>
+  <button onclick="addBall()">Add<br>Ball</button>
   <label id=info></label><br>
 </body>
 </html>
