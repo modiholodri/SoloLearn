@@ -1,7 +1,4 @@
-/* Modified by Modi */
-
-/* Original by Rull Deef 🐺 */
-/* https://code.sololearn.com/W3bBU8i1UX9G */
+/* Created by Modi */
 
 body {
   margin: 0;
@@ -22,17 +19,6 @@ button {
   font-size: 2em;
   text-align: center;
   vertical-align: middle;
-  z-index: 111;
-}
-
-.phaseSlider {
-
-
-  top: 20px;
-  left: 140px;
-  right:80px;
-  position: fixed;
-
   z-index: 111;
 }
 
@@ -183,7 +169,7 @@ canvas {
   opacity: 1;
   overflow: hidden !important;
   visibility: visible !important;
-  z-index: 110;
+  z-index: 108;
   transition: opacity 550ms ease-in-out;
   -webkit-transition: opacity 550ms ease-in-out;
 }

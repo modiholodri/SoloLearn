@@ -1,6 +1,6 @@
 <!-- Modified by Modi -->
 
-<!-- Original created by Rull Deef 🐺 -->
+<!-- Original by Rull Deef 🐺 -->
 <!-- https://code.sololearn.com/W3bBU8i1UX9G -->
 
 <!DOCTYPE html>
@@ -22,43 +22,53 @@
     <span></span>
     <span></span>
   </nav>
-    <span class="menuSections">
-      <!-- Waves -->
-      <input type=range min=0 max=240 value=0 id=phase oninput=resize()><br>
-      <label for=showWaves>Show Waves</label>
-      <input type=checkbox id=showWaves checked><br>
-      <label for=fadeWaves>Fade Wave</label>
-      <input type=checkbox id=fadeWaves checked><br>
-      <label for=fillWaves>Fill Waves</label>
-      <input type=checkbox id=fillWaves><br>
-      <label for=shiftWave>Shift Wave</label>
-      <input type=checkbox id=shiftWave><br>
-      <!-- Balls -->
-      <label for=showBalls>Show Balls</label>  
-      <input type=checkbox id=showBalls checked><br>
-      <label for=shrinkBalls>Shrink Balls</label>
-      <input type=checkbox id=shrinkBalls checked><br>
-      <!-- Grid -->
-      <input type=range min=1 max=100 value=70 id=zoom oninput=resize()><br>
-      <label for=showPane>Show Pane</label>
-      <input type=checkbox id=showPane checked><br>
-      <label for=outerGrid>Outer Grid</label>
-      <input type=checkbox id=outerGrid><br>
-      <label for=innerGrid>Inner Grid</label>
-      <input type=checkbox id=innerGrid checked><br>
-      <!-- Animation -->
-      <label for=rotate>Rotate</label>
-      <input type=checkbox id=rotate><br>
-      <input type=range min=10 max=200 value=20 id=rotationSpeed oninput=resize()><br>
-      <!-- Other Stuff -->
-      <p style="text-align:center">
-        <a href='https://en.m.wikipedia.org/wiki/Electromagnetic_radiation' target="_blank">Electromagnetic<br>Waves on Wikipedia</a>
-      </p>
-    </span>
+  <span class="menuSections">
+    <!-- Waves -->
+
+    <label for=showWaves>Show Waves</label>
+    <input type=checkbox id=showWaves checked><br>
+    <label for=fadeWaves>Fade Wave</label>
+    <input type=checkbox id=fadeWaves checked><br>
+    <label for=fillWaves>Fill Waves</label>
+    <input type=checkbox id=fillWaves><br>
+    <label for=shiftWave>Shift Wave</label>
+    <input type=checkbox id=shiftWave checked><br>
+    <!-- Balls -->
+    <label for=showBalls>Show Balls</label>  
+    <input type=checkbox id=showBalls checked><br>
+    <label for=shrinkBalls>Shrink Balls</label>
+    <input type=checkbox id=shrinkBalls checked><br>
+    <!-- Grid -->
+    <input type=range min=5 max=100 value=70 id=zoom oninput=resize()><br>
+    <label for=showPane>Show Pane</label>
+    <input type=checkbox id=showPane checked><br>
+    <label for=outerGrid>Outer Grid</label>
+    <input type=checkbox id=outerGrid checked><br>
+    <label for=innerGrid>Inner Grid</label>
+    <input type=checkbox id=innerGrid checked><br>
+    <!-- Other Stuff -->
+    <p style="text-align:center">
+      <a href='https://en.m.wikipedia.org/wiki/Electromagnetic_radiation' target="_blank">Electromagnetic<br>Waves on Wikipedia</a>
+    </p>
+  </span>
+
+  <div class="helpSections">
+    <p>Click somewhere to add a ball.</p>
+    <p>Swipe to change the viewing angle.</p>
+    <p>Pinch horizontally to zoom.</p>
+    <p>Slide to rotate.</p>
+    <p>Change the settings in the menu.</p>
+    <!-- Other Stuff -->
+    <p style="text-align:center">
+      <a href='https://en.m.wikipedia.org/wiki/Electromagnetic_radiation' target="_blank">Electromagnetic<br>Waves on Wikipedia</a>
+    </p>
+  </div>
+  
+  <div id="info" class="infoSections" style="text-align-Last:justify">Info Me!</div>
 
   <canvas></canvas>
-
-  <button onclick="addBall()">Add<br>Ball</button>
-  <label id=info></label><br>
+  <button class="helpButton"><strong>?</strong></button>
+  <button class="infoButton"><strong>I</strong></button>
+    <input class="phaseSlider"type=range min=0 max=240 value=0 id=phase oninput=resize()><br>
 </body>
 </html>

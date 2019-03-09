@@ -1,7 +1,7 @@
-// Created by Rull Deef 🐺
-// https://code.sololearn.com/W3bBU8i1UX9G
-
 // Modified by Modi
+
+// Original by Rull Deef 🐺
+// https://code.sololearn.com/W3bBU8i1UX9G
 
 // quality variable. Standard quality - 1.00
 var quality = 1.00;
@@ -9,14 +9,61 @@ var quality = 1.00;
 // rotation angles
 var alpha = Math.PI/6;
 var beta = Math.PI/9;
-var angle = 100;
+var cosAlpha = Math.cos( alpha );
+var sinAlpha = Math.sin( alpha );
+var sinBeta = Math.sin( beta );
+var cosBeta = Math.cos( beta );
 var mouseIsDown = false;
 
+// fix the settings
+var stepX = 0.1;
+var fromX = -5;
+var toX = 5;
 var rotationSpeed = 2;
+var angle = 100;
+var zoom = 70;
+// sliding motion
+var startSlideX;
+var startSlideY;
 
 // setup the canvas
 var width, height, ctx;
 var blSi;  // block size
+
+var touchInfo = ""
+function showTouches( event ) {
+  touchInfo = ""
+  for (var i = 0; i < event.touches.length; i++) {
+    touchInfo += 
+      '<p>Touch ' + i + 
+      ' X -> ' + Math.round( event.touches[i].pageX ) +
+      ' Y -> ' + Math.round( event.touches[i].pageY ) + '</p>';
+  }
+}
+
+// calculate the frame rate per second
+// The higher filterStrength, the less the fps will reflect temporary variations
+// A value of 1 will only keep the last value
+var filterStrength = 60;
+var frameTime = 0, lastLoop = new Date, thisLoop;
+function getFrameRate ( ) {
+  var thisFrameTime = ( thisLoop = new Date ) - lastLoop;
+  frameTime += ( thisFrameTime - frameTime ) / filterStrength;
+  lastLoop = thisLoop;
+  return ( 1000 / frameTime ).toFixed( 1 );
+}
+
+function showInfo ( ) {
+  $( '#info' ).html( 
+    '<p>Frame Rate: ' + getFrameRate( ) + '</p>' +
+    '<p>Zoom: ' + zoom + '</p>' +
+    '<p>Rotation: ' + rotationSpeed.toFixed( 3 ) + '</p>' +
+    '<p>cosAlpha: ' + cosAlpha.toFixed( 3 ) + '</p>' +
+    '<p>cosBeta: ' + cosBeta.toFixed( 3 ) + '</p>' +
+    '<p>StartSlideX: ' + Math.round( startSlideX ) + '</p>' +
+    '<p>StartSlideY: ' + Math.round( startSlideY ) + '</p>' + 
+    touchInfo );
+}
 
 // something changed in the settings init everything
 function init( ) {
@@ -24,38 +71,60 @@ function init( ) {
   canvas.width = width = Math.round( quality * window.innerWidth );
   canvas.height = height = Math.round( quality * window.innerHeight );
   ctx = canvas.getContext( '2d' );
-  var zoom = $('#zoom').prop('value');
+  zoom = $('#zoom').prop('value');
   blSi = width*9/zoom;
-  rotationSpeed = $('#rotationSpeed').prop('value')/10;
+  rotationSpeed = 2;
     
   // handle the touch stuff
   canvas.ontouchstart = function( event ) {
-    startSlide( event.pageX || event.touches[0].pageX );
-    startSlideY( event.pageY || event.touches[0].pageY );
+    //event.preventDefault();
+    showTouches( event );
+    var touches = event.touches;
+            
+    if( touches.length == 1 ) {
+      startSlide( event.touches[0].pageX, event.touches[0].pageY );
+    }
+    else if ( touches.length == 2 ) {
+      startPinch( event.touches[0].pageX, event.touches[0].pageY, 
+                  event.touches[1].pageX, event.touches[1].pageY );
+    }
   };
   canvas.ontouchmove = function( event ) {
-    slideTo( event.pageX || event.touches[0].pageX );
-    slideYTo( event.pageY || event.touches[0].pageY );
+    event.preventDefault();
+    showTouches( event );
+    var touches = event.touches;
+            
+    if( touches.length == 1 ) {
+      slideIt( event.touches[0].pageX, event.touches[0].pageY );
+    }
+    else if ( touches.length == 2 ) {
+      pinchIt( event.touches[0].pageX, event.touches[0].pageY, 
+               event.touches[1].pageX, event.touches[1].pageY );
+    }
+  };
+  canvas.ontouchend = function( event ) {
+    touchInfo = "";
   };
 
   // handle the mouse drag stuff
   canvas.onmousedown = function( event ) {
-    startSlide( event.pageX || event.touches[0].pageX );
-    startSlideY( event.pageY || event.touches[0].pageY );
+    event.preventDefault();
+    startSlide( event.pageX, event.pageY );
     mouseIsDown = true;
   };
   canvas.onmouseleave = canvas.onmouseup = function( event ) {
     mouseIsDown = false;
   };
   canvas.onmousemove = function( event ) {
+    event.preventDefault();
     if ( mouseIsDown ) {
-      slideTo( event.pageX || event.touches[0].pageX );
-      slideYTo( event.pageY || event.touches[0].pageY );
+      slideIt( event.pageX, event.pageY );
     }
   };
 
   // handle the mouse click stuff
   canvas.onclick = canvas.ondblclick = function( event ) {
+    event.preventDefault();
     addBall( ); // add a ball
     mouseIsDown = false;
   };
@@ -103,12 +172,13 @@ function animate( ) {
   var tN = 0;
   if ( $('#shiftWave').prop('checked') ) tN = Date.now( )/5e2;
   // rotate the whole thing or not
-  if( $( '#rotate' ).prop('checked') ) slide( 1 * rotationSpeed );
+  rotationSpeed *= 0.995;
+  slide( 1 * rotationSpeed );
   
-  var cosAlpha = Math.cos( alpha );
-  var sinAlpha = Math.sin( alpha );
-  var sinBeta = Math.sin( beta );
-  var cosBeta = Math.cos( beta );
+  cosAlpha = Math.cos( alpha );
+  sinAlpha = Math.sin( alpha );
+  sinBeta = Math.sin( beta );
+  cosBeta = Math.cos( beta );
 
   // draw the grid
   var x, y;
@@ -137,10 +207,6 @@ function animate( ) {
     }
   }
 
-  // fix the settings
-  var stepX = 0.1;
-  var fromX = -5;
-  var toX = 5;
   if ( sinAlpha > 0 ) { // reverse the drawing
     stepX = -stepX;
     fromX = -fromX;
@@ -155,11 +221,8 @@ function animate( ) {
   }
 
   var xW = 0; // x for the waves
-  // document.querySelector( '#info' ).innerText = 'cosAlpha ' + cosAlpha;
-  // document.querySelector( '#info' ).innerText = 'fromX ' + fromX + '  xP ' + xP + '  dA ' + drawnAlready;  
-  //document.querySelector( '#info' ).innerText = 'Alpha ' + alpha + '  Beta ' + beta + '  StartX ' + startX + '  StartY ' + startY ;
-  // drawBall( 5*blSi, blSi,  blSi, 'grey' ); // reference ball
 
+  showInfo();
   // draw the waves
   for( xW = fromX; (fromX<0 && xW<=toX) || (fromX>0 && xW>=toX); xW += stepX ) {
     var xN = xW*blSi; 
@@ -340,6 +403,7 @@ function animate( ) {
     if ( !showPane ) return;
     
     ctx.fillStyle = 'red';
+    ctx.globalAlpha = waveAlpha;
     ctx.beginPath( );
     // points
     var p0 = project( xN, blSi, blSi );
@@ -373,17 +437,55 @@ function resize( ) {
   init( );
 };
 
-// sliding X motion
-var startX;
-function startSlide( x ) {
-  startX = x;
+// sliding motion
+function startSlide( x, y ) {
+  startSlideX = x;
+  startSlideY = y;
 };
 
-// slide it X
-function slideTo( x ) {
-  var dx = x - startX;
-  startX = x;
+// slide it
+function slideIt( x, y ) {
+  var dx = x - startSlideX;
+  startSlideX = x;
   slide( dx );
+  rotationSpeed += dx / 5;
+
+  var dy = y - startSlideY;
+  startSlideY = y;
+  slideY( dy );
+};
+
+// pinching motion
+var startX1, startX2;
+var startY1, startY2;
+var oldZoom = 1;
+function startPinch( x1, y1, x2, y2 ) {
+  // zoom
+  startX1 = x1;
+  startX2 = x2;
+  oldZoom = $('#zoom').val();
+  
+  // close up
+  startY1 = y1;
+  startY2 = y2;
+};
+
+// pinch it
+function pinchIt( x1, y1, x2, y2 ) {
+  var zoomFactor = (x1 - x2)/(startX1 - startX2);
+  //startX1 = x1;
+  //startX2 = x2;
+  var newZoom = oldZoom / zoomFactor;
+  if ( newZoom < 5 ) newZoom = 5;
+  if ( newZoom > 100 ) newZoom = 100;
+  // document.querySelector( '#info' ).innerText = 'Old Z: ' + oldZoom + '  New Z: ' + newZoom;
+  $('#zoom').val( newZoom );
+
+  var closeUpFactor = (startY1 - startY2)/(y1 - y2);
+  //startY1 = y1;
+  //startY2 = y2;
+
+  resize( );
 };
 
 // change Alpha
@@ -391,22 +493,9 @@ function slide( dx ) {
   alpha += dx/200;
 };
 
-// sliding Y motion
-var startY;
-function startSlideY( y ) {
-  startY = y;
-};
-
-// slide it Y
-function slideYTo( y ) {
-  var dy = y - startY;
-  startY = y;
-  slideY( dy );
-};
-
 // change Beta
 function slideY( dy ) {
-  angle += dy;
+  angle -= dy;
   if ( angle < 30 ) angle = 30;
   if ( angle > 500 ) angle = 500;
   beta = Math.PI/angle*10;
@@ -475,11 +564,16 @@ $( document ).ready( function( ) {
         alert ( 'I have no clue where I am running...' );
     }
 
-    // Hamburger Menu Created by dρlυѕρlυѕ
     setTimeout( function() { 
       $( '.menuButton' ).click( function() {
         $( this ).toggleClass( 'show' );
         $( '.menuSections' ).toggleClass( 'show' );
+      });
+      $( '.helpButton' ).click( function() {
+        $( '.helpSections' ).toggleClass( 'show' );
+      });
+      $( '.infoButton' ).click( function() {
+        $( '.infoSections' ).toggleClass( 'show' );
       });
     }, 600);
 });
