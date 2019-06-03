@@ -1,0 +1,47 @@
+<!-- Created by Modi -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gravity Stuff</title>
+
+  <!-- JQuery -->
+  <script src='https://code.jquery.com/jquery-1.12.4.js'></script>
+  <script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>    
+  <script src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js'></script>   
+
+  <link rel='stylesheet' href='Gravity Stuff.css'/>    
+  <script src='Gravity Stuff.js'></script>    
+</head>
+<body onload=init() onresize=resize()>
+  <nav class="menuButton">
+    <span></span>
+    <span></span>
+    <span></span>
+  </nav>
+  <span class="menuSections">
+    <!-- Grid -->
+    <label for=showWheel>Show Wheel</label>
+    <input type=checkbox id=showWheel checked><br>
+    <!-- Other Stuff -->
+    <p style="text-align:center">
+      <a href='https://en.wikipedia.org/wiki/Gravity' target="_blank">Gravity<br>on Wikipedia</a>
+    </p>
+  </span>
+
+  <div id="info" class="infoSections" style="text-align-Last:justify"></div>
+
+  <div class="helpSections">
+    <p>Roll, pitch or yaw your phone.</p>
+    <p>Change the settings in the menu.</p>
+    <!-- Other Stuff -->
+    <p style="text-align:center">
+      <a href='https://en.wikipedia.org/wiki/Gravity' target="_blank">Gravity<br>on Wikipedia</a>
+    </p>
+  </div>
+  
+  <canvas></canvas>
+  <button class="helpButton"><strong>?</strong></button>
+  <button class="infoButton"><strong>I</strong></button>
+</body>
+</html>
