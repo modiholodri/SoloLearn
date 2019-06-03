@@ -1,0 +1,231 @@
+/* Created by Modi */
+
+body {
+  margin: 0;
+  font-family: arial;
+  font-size: 0.75em;
+  color: silver;
+  background-color: black;
+}
+
+button {
+  width: 40px;
+  height: 40px;
+  border-width: thick;
+  color: gray;
+  top: 20px;
+  position: fixed;
+  background-color: black;
+  font-size: 2em;
+  text-align: center;
+  vertical-align: middle;
+  z-index: 111;
+}
+
+.phaseSlider {
+
+
+  top: 20px;
+  left: 140px;
+  right:80px;
+  position: fixed;
+
+  z-index: 111;
+}
+
+.helpButton {
+  left: 20px;
+}
+
+.infoButton {
+  left: 80px;
+}
+
+p {
+  margin: 10px 10px;
+}
+
+canvas {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 0;
+}
+
+/* Hamburger Menu Created by dρlυѕρlυѕ */
+.menuButton {
+  width: 40px;
+  height: 30px;
+  position: fixed;
+  float: left;
+  right: 20px; 
+  top: 20px;
+  z-index: 111;
+}
+.menuButton span {
+  width: 100%;
+  float: left;
+  height: 4.5px;
+  background-color: gray;
+  margin-top: 6px;
+  transition: 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+}
+
+/* button icon bars' height */
+.menuButton:hover > span {
+  background-color: silver;
+  outline: none;
+}
+.menuButton > span:first-child {
+  transform: translateY( -30% );
+}
+
+.menuButton > span:last-child {
+  transform: translateY( 30% );
+}
+
+/* button bars hover animation */
+.menuButton:hover span:nth-child( 1 ) {
+  transform: translateY( -100% );
+}
+.menuButton:hover span:nth-child( 3 ) {
+  transform: translateY( 100% );
+}
+
+/* button onclick animation */
+.menuButton.show span:nth-child( 1 ) {
+  -webkit-transform: rotate( 45deg ) translateY( -50% );
+  transform: rotate( 45deg ) translate( 8px, 8px );
+  outline: none;
+}
+.menuButton.show span:nth-child( 2 ) {
+  opacity: 0;
+  outline: none;
+}
+.menuButton.show span:nth-child( 3 ) {
+  -webkit-transform: rotate( -45deg ) translateY( -50% );
+  transform: rotate( -45deg ) translate( 7px, -7px );
+  outline: none;
+}
+
+/* menu section */
+.menuSections {
+  opacity: 0;
+
+  padding: 10px 10px;
+  background-color: rgba( 30, 30, 30, 0.7);
+  display: inline-block;
+  text-align: right;
+  position: fixed;
+  right: 20px; 
+  top: 80px;
+  z-index: -111;
+}
+
+.menuSections.show {
+  opacity: 1;
+  overflow: hidden !important;
+  visibility: visible !important;
+  z-index: 110;
+  transition: opacity 550ms ease-in-out;
+  -webkit-transition: opacity 550ms ease-in-out;
+}
+.menuSections.show label {
+  color: gray;
+  outline: none;
+  text-align: right !important;
+  cursor: pointer;
+  font-size: 1.2em;
+  line-height: 2em !important;
+}
+.menuSections.show label:hover {
+  color: silver !important;
+  font-weight: 800 !important;
+  font-size: 1.4em !important;
+  transition: .5s ease;
+  -webkit-transition: .5s ease;
+}
+
+/* help section */
+.helpSections {
+  opacity: 0;
+  margin: 80px 20px;
+  padding: 10px 10px 10px 10px;
+  background-color: rgba( 30, 30, 30, 0.7);
+  position: fixed;
+  font-size: 1.2em;
+  z-index: -111;
+}
+.helpSections.show {
+  opacity: 1;
+  overflow: hidden !important;
+  visibility: visible !important;
+  z-index: 110;
+  transition: opacity 550ms ease-in-out;
+  -webkit-transition: opacity 550ms ease-in-out;
+}
+
+/* info section */
+.infoSections {
+  opacity: 0;
+  margin: 80px 20px;
+  padding: 10px 10px 10px 10px;
+  background-color: rgba( 30, 30, 30, 0.7);
+  position: fixed;
+  font-size: 1.2em;
+  z-index: -111;
+}
+.infoSections.show {
+  opacity: 1;
+  overflow: hidden !important;
+  visibility: visible !important;
+  z-index: 110;
+  transition: opacity 550ms ease-in-out;
+  -webkit-transition: opacity 550ms ease-in-out;
+}
+menuSections.show label:hover {
+  color: silver !important;
+  font-weight: 800 !important;
+  font-size: 1.4em !important;
+  transition: .5s ease;
+  -webkit-transition: .5s ease;
+}
+
+/* help section */
+.helpSections {
+  opacity: 0;
+  margin: 80px 20px;
+  padding: 10px 10px 10px 10px;
+  background-color: rgba( 30, 30, 30, 0.7);
+  position: fixed;
+  font-size: 1.2em;
+  z-index: -111;
+}
+.helpSections.show {
+  opacity: 1;
+  overflow: hidden !important;
+  visibility: visible !important;
+  z-index: 110;
+  transition: opacity 550ms ease-in-out;
+  -webkit-transition: opacity 550ms ease-in-out;
+}
+
+/* info section */
+.infoSections {
+  opacity: 0;
+  margin: 80px 20px;
+  padding: 10px 10px 10px 10px;
+  background-color: rgba( 30, 30, 30, 0.7);
+  position: fixed;
+  font-size: 1.2em;
+  z-index: -111;
+}
+.infoSections.show {
+  opacity: 1;
+  overflow: hidden !important;
+  visibility: visible !important;
+  z-index: 110;
+  transition: opacity 550ms ease-in-out;
+  -webkit-transition: opacity 550ms ease-in-out;
+}
