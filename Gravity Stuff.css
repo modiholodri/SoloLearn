@@ -58,13 +58,12 @@ canvas {
   background-color: gray;
   margin-top: 6px;
   transition: 0.2s ease;
-  -webkit-transition: all 0.2s ease;
+
 }
 
 /* button icon bars' height */
 .menuButton:hover > span {
   background-color: silver;
-  outline: none;
 }
 .menuButton > span:first-child {
   transform: translateY( -30% );
@@ -85,17 +84,20 @@ canvas {
 /* button onclick animation */
 .menuButton.show span:nth-child( 1 ) {
   -webkit-transform: rotate( 45deg ) translateY( -50% );
+  -moz-transform: rotate( 45deg ) translateY( -50% );
+  -ms-transform: rotate( 45deg ) translateY( -50% );
+  -o-transform: rotate( 45deg ) translateY( -50% );
   transform: rotate( 45deg ) translate( 8px, 8px );
-  outline: none;
 }
 .menuButton.show span:nth-child( 2 ) {
   opacity: 0;
-  outline: none;
 }
 .menuButton.show span:nth-child( 3 ) {
   -webkit-transform: rotate( -45deg ) translateY( -50% );
+  -moz-transform: rotate( -45deg ) translateY( -50% );
+  -ms-transform: rotate( -45deg ) translateY( -50% );
+  -o-transform: rotate( -45deg ) translateY( -50% );
   transform: rotate( -45deg ) translate( 7px, -7px );
-  outline: none;
 }
 
 /* menu section */
@@ -103,7 +105,8 @@ canvas {
   opacity: 0;
 
   padding: 10px 10px;
-  background-color: rgba( 30, 30, 30, 0.7);
+  background-color: rgb( 30, 30, 30 );
+  background-color: rgba( 30, 30, 30, 0.7 );
   display: inline-block;
   text-align: right;
   position: fixed;
@@ -114,26 +117,23 @@ canvas {
 
 .menuSections.show {
   opacity: 1;
-  overflow: hidden !important;
-  visibility: visible !important;
+  overflow: hidden;
+  visibility: visible;
   z-index: 110;
   transition: opacity 550ms ease-in-out;
-  -webkit-transition: opacity 550ms ease-in-out;
 }
 .menuSections.show label {
   color: gray;
-  outline: none;
-  text-align: right !important;
+  text-align: right;
   cursor: pointer;
   font-size: 1.2em;
-  line-height: 2em !important;
+  line-height: 2em;
 }
 .menuSections.show label:hover {
-  color: silver !important;
-  font-weight: 800 !important;
-  font-size: 1.4em !important;
-  transition: .5s ease;
-  -webkit-transition: .5s ease;
+  color: silver;
+  font-weight: 800;
+  font-size: 1.4em;
+  transition: .5s ease-in-out;
 }
 
 /* help section */
@@ -141,18 +141,18 @@ canvas {
   opacity: 0;
   margin: 80px 20px;
   padding: 10px 10px 10px 10px;
-  background-color: rgba( 30, 30, 30, 0.7);
+  background-color: rgb( 30, 30, 30 );
+  background-color: rgba( 30, 30, 30, 0.7 );
   position: fixed;
   font-size: 1.2em;
   z-index: -111;
 }
 .helpSections.show {
   opacity: 1;
-  overflow: hidden !important;
-  visibility: visible !important;
+  overflow: hidden;
+  visibility: visible;
   z-index: 110;
   transition: opacity 550ms ease-in-out;
-  -webkit-transition: opacity 550ms ease-in-out;
 }
 
 /* info section */
@@ -160,25 +160,26 @@ canvas {
   opacity: 0;
   margin: 80px 20px;
   padding: 10px 10px 10px 10px;
-  background-color: rgba( 30, 30, 30, 0.7);
+  background-color: rgb( 30, 30, 30 );
+  background-color: rgba( 30, 30, 30, 0.7 );
   position: fixed;
   font-size: 1.2em;
   z-index: -111;
 }
 .infoSections.show {
   opacity: 1;
-  overflow: hidden !important;
-  visibility: visible !important;
+  overflow: hidden;
+  visibility: visible;
   z-index: 108;
   transition: opacity 550ms ease-in-out;
-  -webkit-transition: opacity 550ms ease-in-out;
+
 }
 menuSections.show label:hover {
-  color: silver !important;
-  font-weight: 800 !important;
-  font-size: 1.4em !important;
-  transition: .5s ease;
-  -webkit-transition: .5s ease;
+  color: silver;
+  font-weight: 800;
+  font-size: 1.4em;
+  transition: .5s ease-in-out;
+
 }
 
 /* help section */
@@ -186,18 +187,19 @@ menuSections.show label:hover {
   opacity: 0;
   margin: 80px 20px;
   padding: 10px 10px 10px 10px;
-  background-color: rgba( 30, 30, 30, 0.7);
+  background-color: rgb( 30, 30, 30 );
+  background-color: rgba( 30, 30, 30, 0.7 );
   position: fixed;
   font-size: 1.2em;
   z-index: -111;
 }
 .helpSections.show {
   opacity: 1;
-  overflow: hidden !important;
-  visibility: visible !important;
+  overflow: hidden;
+  visibility: visible;
   z-index: 110;
   transition: opacity 550ms ease-in-out;
-  -webkit-transition: opacity 550ms ease-in-out;
+
 }
 
 /* info section */
@@ -205,16 +207,17 @@ menuSections.show label:hover {
   opacity: 0;
   margin: 80px 20px;
   padding: 10px 10px 10px 10px;
-  background-color: rgba( 30, 30, 30, 0.7);
+  background-color: rgb( 30, 30, 30 );
+  background-color: rgba( 30, 30, 30, 0.7 );
   position: fixed;
   font-size: 1.2em;
   z-index: -111;
 }
 .infoSections.show {
   opacity: 1;
-  overflow: hidden !important;
-  visibility: visible !important;
+  overflow: hidden;
+  visibility: visible;
   z-index: 110;
   transition: opacity 550ms ease-in-out;
-  -webkit-transition: opacity 550ms ease-in-out;
+
 }

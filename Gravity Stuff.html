@@ -22,7 +22,21 @@
   <span class="menuSections">
     <!-- Grid -->
     <label for=showWheel>Show Wheel</label>
-    <input type=checkbox id=showWheel checked><br>
+    <input type=checkbox id=showWheel><br>
+
+    <!-- Color -->
+
+    <label for=smoothColor>Smooth Color</label>
+    <input type=checkbox id=smoothColor checked><br>
+    <label for=randomColor>Random Color</label>
+    <input type=checkbox id=randomColor><br>      
+    
+    <label>Ball Size</label><br>
+    <input type=range min=0.1 max=6 value=4 id=size step=0.1 oninput=resize()><br>
+    
+    <label>Ball Trail</label><br>
+    <input type=range min=0.05 max=0.6 value=0.2 id=fade step=0.01 oninput=resize()><br>
+
     <!-- Other Stuff -->
     <p style="text-align:center">
       <a href='https://en.wikipedia.org/wiki/Gravity' target="_blank">Gravity<br>on Wikipedia</a>
