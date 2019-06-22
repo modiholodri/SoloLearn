@@ -20,24 +20,31 @@
     <span></span>
   </nav>
   <span class="menuSections">
-    <!-- Axis -->
+    <!-- Engine stuff -->
+    <label for=rainbow>Rainbow</label>
+    <input type=radio id=rainbow name=engineSelection value=rainbow oninput=resize()>
+    <label for=fire>Fire</label>
+    <input type=radio id=fire name=engineSelection value=fire checked oninput=resize()><br>
+    <label for=showEngineBlock>Show Engine Block</label>
+    <input type=checkbox id=showEngineBlock oninput=resize()><br>
+    <label for=showPiston>Show Piston</label>
+    <input type=checkbox id=showPiston checked oninput=resize()><br>
+    <label for=showRod>Show Rod</label>
+    <input type=checkbox id=showRod checked oninput=resize()><br>
+    <label for=showShaft>Show Shaft</label>
+    <input type=checkbox id=showShaft checked oninput=resize()><br>
+    <label>Engine Speed</label><br>
+    <input type=range min=-0.3 max=0.3 value=0.1 id=engineSpeed step=0.01 oninput=resize()><br>
+
+    <!-- Axis other view related stuff -->
     <label for=showAxis>Show Axis</label>
     <input type=checkbox id=showAxis><br>
-    
     <label>Ball Size</label><br>
     <input type=range min=0.1 max=4 value=2 id=ballSize step=0.1 oninput=resize()><br>
-    
-    <label>Ball Trail</label><br>
-    <input type=range min=0.05 max=0.6 value=0.2 id=fade step=0.01 oninput=resize()><br>
-    
+    <label>Fade Factor</label><br>
+    <input type=range min=0.05 max=0.6 value=0.2 id=fadeFactor step=0.01 oninput=resize()><br>
     <label>Show Partially</label><br>
-    <input type=range min=0 max=6.3 value=1.6 id=showPartially step=0.1 oninput=resize()><br>
-    
-    <label>Engine Rotation</label><br>
-    <input type=range min=-0.3 max=0.3 value=0 id=engineRotation step=0.01 oninput=resize()><br>
-    
-    <label>View Rotation</label><br>
-    <input type=range min=-0.03 max=0.03 value=0 id=viewRotation step=0.001 oninput=resize()><br>
+    <input type=range min=0 max=6.3 value=3.15 id=showPartially step=0.1 oninput=resize()><br>
     
     <!-- Other Stuff -->
     <p style="text-align:center">

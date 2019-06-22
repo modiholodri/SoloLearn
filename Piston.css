@@ -49,6 +49,17 @@ canvas {
   z-index: 0;
 }
 
+engineSelection {
+  color: gray;
+  top: 20px;
+  position: fixed;
+  background-color: black;
+  font-size: 2em;
+  text-align: center;
+  vertical-align: middle;
+  z-index: 111;
+}
+
 /* Hamburger Menu Created by dρlυѕρlυѕ */
 .menuButton {
   width: 40px;
