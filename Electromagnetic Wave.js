@@ -1,38 +1,30 @@
-// Modified by Modi
+// Created by Modi
 
-// Original by Rull Deef 🐺
-// https://code.sololearn.com/W3bBU8i1UX9G
-
-// quality variable. Standard quality - 1.00
-var quality = 1.00;
 
 // rotation angles
-var alpha = Math.PI/6;
-var beta = Math.PI/9;
+var alpha = 0;
+var beta = 0;
 var cosAlpha = Math.cos( alpha );
 var sinAlpha = Math.sin( alpha );
 var sinBeta = Math.sin( beta );
 var cosBeta = Math.cos( beta );
 var mouseIsDown = false;
 
-// fix the settings
-var stepX = 0.1;
-var fromX = -5;
-var toX = 5;
-var rotationSpeed = 2;
-var angle = 100;
-var zoom = 70;
+var size = 2.0;
+var fade = 0.6;
+
 // sliding motion
 var startSlideX;
 var startSlideY;
 
 // setup the canvas
-var width, height, ctx;
-var blSi;  // block size
+var width, halfWidth;
+var height, halfHeight;
+var ctx;
 
-var touchInfo = ""
+var touchInfo = "";
 function showTouches( event ) {
-  touchInfo = ""
+  touchInfo = "";
   for (var i = 0; i < event.touches.length; i++) {
     touchInfo += 
       '<p>Touch ' + i + 
@@ -45,9 +37,9 @@ function showTouches( event ) {
 // The higher filterStrength, the less the fps will reflect temporary variations
 // A value of 1 will only keep the last value
 var filterStrength = 60;
-var frameTime = 0, lastLoop = new Date, thisLoop;
+var frameTime = 0, lastLoop = new Date(), thisLoop;
 function getFrameRate ( ) {
-  var thisFrameTime = ( thisLoop = new Date ) - lastLoop;
+  var thisFrameTime = ( thisLoop = new Date() ) - lastLoop;
   frameTime += ( thisFrameTime - frameTime ) / filterStrength;
   lastLoop = thisLoop;
   return ( 1000 / frameTime ).toFixed( 1 );
@@ -56,8 +48,9 @@ function getFrameRate ( ) {
 function showInfo ( ) {
   $( '#info' ).html( 
     '<p>Frame Rate: ' + getFrameRate( ) + '</p>' +
-    '<p>Zoom: ' + zoom + '</p>' +
-    '<p>Rotation: ' + rotationSpeed.toFixed( 3 ) + '</p>' +
+    '<p>Balls: ' + balls.length + '</p>' +
+
+    '<p>sinAlpha: ' + sinAlpha.toFixed( 3 ) + '</p>' +
     '<p>cosAlpha: ' + cosAlpha.toFixed( 3 ) + '</p>' +
     '<p>cosBeta: ' + cosBeta.toFixed( 3 ) + '</p>' +
     '<p>StartSlideX: ' + Math.round( startSlideX ) + '</p>' +
@@ -68,39 +61,33 @@ function showInfo ( ) {
 // something changed in the settings init everything
 function init( ) {
   var canvas = $( 'canvas' )[0];
-  canvas.width = width = Math.round( quality * window.innerWidth );
-  canvas.height = height = Math.round( quality * window.innerHeight );
+  canvas.width = width = window.innerWidth;
+  canvas.height = height = window.innerHeight;
+  halfWidth = width / 2;
+  halfHeight = height / 2;
   ctx = canvas.getContext( '2d' );
-  zoom = $('#zoom').prop('value');
-  blSi = width*9/zoom;
-  rotationSpeed = 2;
+  rotationSpeed = 0;
+  
+  size = $('#size').prop('value');
+  fade = $('#fade').prop('value');
     
   // handle the touch stuff
   canvas.ontouchstart = function( event ) {
-    //event.preventDefault();
+    event.preventDefault();
     showTouches( event );
-    var touches = event.touches;
-            
-    if( touches.length == 1 ) {
-      startSlide( event.touches[0].pageX, event.touches[0].pageY );
-    }
-    else if ( touches.length == 2 ) {
-      startPinch( event.touches[0].pageX, event.touches[0].pageY, 
-                  event.touches[1].pageX, event.touches[1].pageY );
+
+    if( event.touches.length == 1 ) {
+       startSlide( event.touches[0].pageX, event.touches[0].pageY );
     }
   };
   canvas.ontouchmove = function( event ) {
     event.preventDefault();
     showTouches( event );
-    var touches = event.touches;
-            
-    if( touches.length == 1 ) {
-      slideIt( event.touches[0].pageX, event.touches[0].pageY );
+
+    for( var i = 0; i <  event.touches.length; i++ ) {
+      addBall( event.touches[i].pageX, event.touches[i].pageY ); // add a ball
     }
-    else if ( touches.length == 2 ) {
-      pinchIt( event.touches[0].pageX, event.touches[0].pageY, 
-               event.touches[1].pageX, event.touches[1].pageY );
-    }
+    slideIt( event.touches[0].pageX, event.touches[0].pageY );
   };
   canvas.ontouchend = function( event ) {
     touchInfo = "";
@@ -110,6 +97,7 @@ function init( ) {
   canvas.onmousedown = function( event ) {
     event.preventDefault();
     startSlide( event.pageX, event.pageY );
+    addBall( event.pageX, event.pageY ); // add a ball
     mouseIsDown = true;
   };
   canvas.onmouseleave = canvas.onmouseup = function( event ) {
@@ -118,62 +106,103 @@ function init( ) {
   canvas.onmousemove = function( event ) {
     event.preventDefault();
     if ( mouseIsDown ) {
-      slideIt( event.pageX, event.pageY );
+        // slideIt( event.pageX, event.pageY );
+        addBall( event.pageX, event.pageY ); // add a ball
     }
   };
 
   // handle the mouse click stuff
   canvas.onclick = canvas.ondblclick = function( event ) {
     event.preventDefault();
-    addBall( ); // add a ball
+    addBall( event.pageX, event.pageY ); // add a ball
     mouseIsDown = false;
   };
+
+if(window.DeviceMotionEvent) { 
+window.addEventListener("devicemotion", motion, false); 
+} 
+else { 
+console.log("DeviceMotionEvent is not supported"); 
+}
+
+if(window.DeviceOrientationEvent){ 
+window.addEventListener("deviceorientation", orientation, false); }else{ console.log("DeviceOrientationEvent is not supported"); }
 
   animate( );
 }
 
-// old values 
-var xO, yO, zO;
-var waveAlpha = 1;
-var oldFadeWaves = true;
-// photon locations
+function motion(event) { 
+// console.log("Accelerometer: " + event.accelerationIncludingGravity.x + ", " + event.accelerationIncludingGravity.y + ", " + event.accelerationIncludingGravity.z ); 
+}
+
+function orientation(event) { 
+// console.log("Magnetometer: " + event.alpha + ", " + event.beta + ", " + event.gamma );
+}
+
+
+// ball locations
 var balls = [];
-var drawBallsNow = false;
-addBall( ); // add the first ball
+
+var ax = 0;
+var ay = 0;
+var az = 9.81/60;
+
+function updatePosition ( ball ){
+  //update velocity
+  ball.vx += ax;
+  ball.vy += ay;
+  ball.vz += az;
+
+  //update position
+  ball.x += ball.vx;
+  ball.y += ball.vy;
+  ball.z += ball.vz;
+}
+
+var dFilterStrength = 20;
+var dx = 0;
+var dy = 0;
 
 // add another ball
-function addBall( ) {
-  var existAlready = false
-  for( var i=0; i<balls.length; i++) {
-    if ( balls[i].xP == -5 ) {
-      existAlready = true;
-      break;
-    }
+function addBall( x2, y2 ) {
+  var c = 'slateGrey';
+  if( $( '#randomColor' ).prop( 'checked' ) ) {
+  c = '#' + Math.floor ( Math.random( ) * 16777215 ).toString( 16 );
   }
-  if ( !existAlready ) balls.push( { xP: -5, drawnAlready: false } );
+  if( $( '#smoothColor' ).prop( 'checked' ) ) {
+  var r = 256 * ( width - x2 )/width;
+  var b = 256 * ( height - y2 ) / height;
+  var g = 256 * y2 / height;
+  c = 'rgb( '+r+','+g+','+b+')';
+  }
+
+  var factor = 3;
+  var deltaX = ( x2 - startSlideX ) / factor;
+  var deltaY = ( y2 - startSlideY ) / factor;
+  
+  dx += ( deltaX - dx ) / dFilterStrength;
+  dy += ( deltaY - dy ) / dFilterStrength
+
+  y2 = halfHeight - y2;
+  x2 = x2 - halfWidth; 
+
+  var x = x2*cosAlpha;
+  var y = -x2*sinAlpha;
+  var z = -y2;
+
+  balls.push( { 
+    x: x, y: y, z: z, 
+    vx: dx-5, vy: 3, vz: dy-6,
+    c: c
+  } );
 }
 
 var request;
 function animate( ) {
   request = window.requestAnimationFrame( animate );
-  ctx.clearRect( 0, 0, width, height );
-  
-  // get the settings
-  var phase = Math.PI/120 * $('#phase').prop('value');
-  var showBalls = $('#showBalls').prop('checked');
-  var shrinkBalls = $('#shrinkBalls').prop('checked');
-  var showWaves = $('#showWaves').prop('checked');
-  var fadeWaves = $('#fadeWaves').prop('checked');
-  var fillWaves = $('#fillWaves').prop('checked');
-  var showOuterGrid = $('#outerGrid').prop('checked');
-  var showInnerGrid = $('#innerGrid').prop('checked');
-  var showPane = $('#showPane').prop('checked');
-  // shift the time or not
-  var tN = 0;
-  if ( $('#shiftWave').prop('checked') ) tN = Date.now( )/5e2;
-  // rotate the whole thing or not
-  rotationSpeed *= 0.995;
-  slide( 1 * rotationSpeed );
+  ctx.fillStyle = 'rgba( 0, 0, 0,' + fade + ')';
+  ctx.fillRect( 0, 0, width, height );
+
   
   cosAlpha = Math.cos( alpha );
   sinAlpha = Math.sin( alpha );
@@ -182,251 +211,57 @@ function animate( ) {
 
   // draw the grid
   var x, y;
-  if ( showInnerGrid ) {
-    for( x = -4; x <= 4; x++ ) {
-      drawGrid( x, -1, 0, x, 1, 0 ); // middle horizontal
-      drawGrid( x, 0, -1, x, 0, 1 ); // middle vertical
-    }
-    drawGrid( -5, 0, 0, 5, 0, 0 ); // the center line
+  if ( $('#showWheel').prop('checked') ) {
+    
   }
-  if ( showOuterGrid ) {
-    for( x = -5; x <= 5; x++ ) {
-      drawGrid( x, -1,  1, x, 1,  1 );
-      drawGrid( x, -1, -1, x, 1, -1 );
-      drawGrid( x,  1, -1, x,  1, 1 );
-      drawGrid( x, -1, -1, x, -1, 1 );
-    }
-    drawGrid(  5, -1, 0,  5, 1, 0 ); // middle horizontal
-    drawGrid(  5, 0, -1,  5, 0, 1 ); // middle vertical
-    drawGrid( -5, -1, 0, -5, 1, 0 ); // middle horizontal
-    drawGrid( -5, 0, -1, -5, 0, 1 ); // middle vertical
-    for( y = -1; y <= 1; y++ ) {
-      if ( y !== 0 ) drawGrid( -5, y,  0, 5, y, 0 );
-      drawGrid( -5, y,  1, 5, y,  1 );
-      drawGrid( -5, y, -1, 5, y, -1 );
-    }
+  
+  // remove fallen though balls
+  while( balls.length > 0 && balls[0].z > 1000 ) {
+      balls.shift( );
   }
-
-  if ( sinAlpha > 0 ) { // reverse the drawing
-    stepX = -stepX;
-    fromX = -fromX;
-    toX = -toX;
-  }
-
+  
   // move the balls forward
+
   for( var i=0; i<balls.length; i++) {
-      balls[i].xP += 0.1;
-      if ( balls[i].xP >= 5 ) balls[i].xP = -5;
-      balls[i].drawnAlready = false;
+      updatePosition ( balls[i] );
+      drawBall ( balls[i] );
   }
 
-  var xW = 0; // x for the waves
 
   showInfo();
-  // draw the waves
-  for( xW = fromX; (fromX<0 && xW<=toX) || (fromX>0 && xW>=toX); xW += stepX ) {
-    var xN = xW*blSi; 
-    var yN = Math.sin( Math.PI * ( xW-tN ) )*blSi;
-    var zN = Math.sin( Math.PI * ( xW-tN ) + phase )*blSi;
-    if ( xW == fromX ) {
-      xO = xN;
-      yO = yN;
-      zO = zN;
-    }
-    
-    if ( fadeWaves ) waveAlpha = 1-(xW+5)/10;
-    else if ( fadeWaves != oldFadeWaves ) waveAlpha = 1-(balls[0].xP+5)/10;
-    oldFadeWaves = fadeWaves;
-    
-    var zA = zO + zN;
-    var yA = yO + yN;
-
-    // check if a balls should be drawn
-    drawBallsNow = false;
-    for( var i=0; i<balls.length; i++ ) {
-      if ( !balls[i].drawnAlready && 
-         ( ( fromX<0 && xW >= balls[i].xP ) || ( fromX>0 && xW <= balls[i].xP ) ) ) {
-        balls[i].drawnAlready = true;
-        drawPane( xN );
-        drawBallsNow = true;
-      }
-    }
-  
-    if ( cosAlpha > 0 ) {
-      if ( zA>0 ) { // ++green
-        if ( yA>0 ) { // ++green ++blue
-          drawIt( xO, yO, zO, xN, yN, zN, [ 'yellow', 'blue', 'green' ] );
-        }
-        else { // ++green --blue
-          drawIt( xO, yO, zO, xN, yN, zN, [ 'green', 'yellow', 'blue' ] );
-        }
-      }
-      else { // --green 
-        if ( yA>0 ) { // --green ++blue
-          drawIt( xO, yO, zO, xN, yN, zN, [ 'blue', 'yellow', 'green' ] );
-        }
-        else { // --green --blue
-          drawIt( xO, yO, zO, xN, yN, zN, [ 'green', 'blue', 'yellow' ] );
-        }
-      }
-    }
-    else {
-      if ( zA>0 ) { // ++green
-        if ( yA>0 ) { // ++green ++blue
-          drawIt( xO, yO, zO, xN, yN, zN, [ 'green', 'yellow', 'blue' ] );
-        }
-        else { // ++green --blue
-          drawIt( xO, yO, zO, xN, yN, zN, [ 'yellow', 'green', 'blue' ] );
-        }
-      }
-      else { // --green 
-        if ( yA>0 ) { // --green ++blue
-          drawIt( xO, yO, zO, xN, yN, zN, [ 'blue', 'green', 'yellow' ] );
-        }
-        else { // --green --blue
-          drawIt( xO, yO, zO, xN, yN, zN, [ 'blue', 'yellow', 'green' ] );
-        }
-      }
-    }
- 
-    // remember the old stuff
-    xO = xN;
-    yO = yN;
-    zO = zN;
-  }
-
-  // draw the upper grid
-  var yS = 1;
-  var xS = 5;
-  if ( cosAlpha > 0 ) yS = -1;
-  if ( sinAlpha > 0 ) xS = -5;
-  if ( showOuterGrid ) {
-    // short side grid
-    for( x = -5; x <= 5; x++ ) {
-      drawGrid( x, -1,  1, x,  1, 1 ); // top horizontal short
-      drawGrid( x, yS, -1, x, yS, 1 ); // vertical short
-    }
-    // long top grid
-    drawGrid( -5,  0,  1, 5,  0,  1 ); // top middle
-    drawGrid( -5, -1,  1, 5, -1,  1 ); // top side
-    drawGrid( -5,  1,  1, 5,  1,  1 ); // top side
-    // flipping long side grid
-    drawGrid( -5,  yS,  0, 5,  yS,  0 ); // side middle
-    drawGrid( -5,  yS, -1, 5,  yS, -1 ); // side bottom
-    // missing "front" grid
-    drawGrid( xS,  -1,  0, xS,   1,  0 ); // horizontal middle
-    drawGrid( xS,   0,  1, xS,   0, -1 ); // vertical middle
-    drawGrid( xS, -yS,  1, xS, -yS, -1 ); // vertical flipping 
-    drawGrid( xS,  -1, -1, xS,   1, -1 ); // bottom
-  }
-
-  function drawIt( xO, yO, zO, xN, yN, zN, colors ) {
-    drawWaves( xO, yO, zO, xN, yN, zN, colors );
-    if ( drawBallsNow ) drawBalls( xN, yN, zN, colors );
-  }
-
-  function drawBalls( xN, yN, zN, colors ) {
-    if ( !showBalls ) return;
-    ctx.globalAlpha = 1;
-    for( var i=0; i<colors.length; i++) {
-      if ( colors[i] == 'blue' )        drawBall( xN, yN,  0, 'blue' ); // magnetic
-      else if ( colors[i] == 'green' )  drawBall( xN,  0, zN, 'green' ); // electric
-      else if ( colors[i] == 'yellow' ) drawBall( xN, yN, zN, 'yellow' ); // result
-    }
-  }
 
   // draw a single ball
-  function drawBall( xN, yN, zN, color ) {
-    ctx.beginPath( );
-    var radius = 0.1;
-    if ( shrinkBalls ) radius = radius * Math.sqrt( yN*yN + zN*zN );
-    else radius = radius * blSi;
-    radius = radius * (xN+5*blSi)/10/blSi
-    var p7 = project( xN, yN, zN );
-    ctx.arc( p7.x, p7.y, radius, 0, 2 * Math.PI );
+  function drawBall( ball ) {
 
-    ctx.fillStyle = color;
-    ctx.fill( );
-  };
-  
-  function drawWaves( xO, yO, zO, xN, yN, zN, colors ) {
-    if ( !showWaves ) return;
-    ctx.globalAlpha = waveAlpha;
-    for( var i=0; i<colors.length; i++) {
-      if ( colors[i] === 'blue' )        drawWave( xO, yO,  0, xN, yN,  0, 'blue' ); // magnetic
-      else if ( colors[i] === 'green' )  drawWave( xO,  0, zO, xN,  0, zN, 'green' ); // electric
-      else if ( colors[i] === 'yellow' ) drawWave( xO, yO, zO, xN, yN, zN, 'yellow' ); // result
-    }
-  }
 
-  // draw part of a wave
-  function drawWave( xO, yO, zO, xN, yN, zN, color ) {
-    ctx.beginPath( );
-    var p0 = project( xO, 0, 0 );
-    ctx.moveTo( p0.x, p0.y );
-    // old point
-    var p1 = project( xO, yO, zO );
-    ctx.lineTo( p1.x, p1.y );
-    // new one
-    var p3 = project( xN, yN, zN );
-    ctx.lineTo( p3.x, p3.y );
-    // draw outline
-    ctx.strokeStyle = color;   
-    ctx.stroke( );
+    var point2D = project( ball.x, ball.y, ball.z );
     
-    if ( fillWaves ) {
-      // back to the roots
-      var p4 = project( xN, 0, 0 );
-      ctx.lineTo( p4.x, p4.y );
-
-      // fill it
-      ctx.fillStyle = color;
-      ctx.fill( );
-    }
+    ctx.beginPath( );
+    ctx.fillStyle = ball.c;
+    ctx.fillRect( point2D.x, point2D.y, size, size );
   };
   
   // draw a simple grid line
-  function drawGrid( x0, y0, z0, x1, y1, z1 ) {
-    ctx.globalAlpha = 0.4;
-    ctx.strokeStyle = 'red';
+  function drawLine( x0, y0, z0, x1, y1, z1, color ) {
+    var p0 = project( x0, y0, z0 );
+    var p1 = project( x1, y1, z1 );
+
+    ctx.strokeStyle = color;
     ctx.beginPath( );
-    var p0 = project( x0*blSi, y0*blSi, z0*blSi );
+
     ctx.moveTo( p0.x, p0.y );
-    var p1 = project( x1*blSi, y1*blSi, z1*blSi );
+
     ctx.lineTo( p1.x, p1.y );
     ctx.stroke( );
-  };
-  
-  // draw part of a wave
-  function drawPane( xN ) {
-
-    if ( !showPane ) return;
-    
-    ctx.fillStyle = 'red';
-    ctx.globalAlpha = waveAlpha;
-    ctx.beginPath( );
-    // points
-    var p0 = project( xN, blSi, blSi );
-    ctx.moveTo( p0.x, p0.y );
-    var p1 = project( xN, blSi, -blSi );
-    ctx.lineTo( p1.x, p1.y );
-    var p3 = project( xN, -blSi, -blSi );
-    ctx.lineTo( p3.x, p3.y );
-    var p4 = project( xN, -blSi, blSi );
-    ctx.lineTo( p4.x, p4.y );
-
-    ctx.fill( );
   };
   
   // put it in perspective
   function project( x, y, z ) {
-    y = y * (x+5*blSi)/10/blSi;
-    z = z * (x+5*blSi)/10/blSi;
     var x2 = x*cosAlpha - y*sinAlpha;
     var y2 = ( x*sinAlpha + y*cosAlpha )*sinBeta - z*cosBeta;
     return {
-      x: width/2 + x2,
-      y: height/2 - y2
+      x: halfWidth + x2,
+      y: halfHeight - y2
     }
   };
 }
@@ -445,61 +280,12 @@ function startSlide( x, y ) {
 
 // slide it
 function slideIt( x, y ) {
-  var dx = x - startSlideX;
+
   startSlideX = x;
-  slide( dx );
-  rotationSpeed += dx / 5;
-
-  var dy = y - startSlideY;
   startSlideY = y;
-  slideY( dy );
 };
 
-// pinching motion
-var startX1, startX2;
-var startY1, startY2;
-var oldZoom = 1;
-function startPinch( x1, y1, x2, y2 ) {
-  // zoom
-  startX1 = x1;
-  startX2 = x2;
-  oldZoom = $('#zoom').val();
-  
-  // close up
-  startY1 = y1;
-  startY2 = y2;
-};
 
-// pinch it
-function pinchIt( x1, y1, x2, y2 ) {
-  var zoomFactor = (x1 - x2)/(startX1 - startX2);
-  //startX1 = x1;
-  //startX2 = x2;
-  var newZoom = oldZoom / zoomFactor;
-  if ( newZoom < 5 ) newZoom = 5;
-  if ( newZoom > 100 ) newZoom = 100;
-  // document.querySelector( '#info' ).innerText = 'Old Z: ' + oldZoom + '  New Z: ' + newZoom;
-  $('#zoom').val( newZoom );
-
-  var closeUpFactor = (startY1 - startY2)/(y1 - y2);
-  //startY1 = y1;
-  //startY2 = y2;
-
-  resize( );
-};
-
-// change Alpha
-function slide( dx ) {
-  alpha += dx/200;
-};
-
-// change Beta
-function slideY( dy ) {
-  angle -= dy;
-  if ( angle < 30 ) angle = 30;
-  if ( angle > 500 ) angle = 500;
-  beta = Math.PI/angle*10;
-};
 
 // Full Screen Part - 2018-10-06 - Created by Modi
 /******************************************************
@@ -530,7 +316,7 @@ function downloadCode( ) {
     
     // create a download link
     var downloadLink = document.createElement("a");
-    downloadLink.download = "ElectromagneticWaveModified.html";
+    downloadLink.download = "Gravity Stuff.html";
     downloadLink.innerHTML = "Download File";
     if ( window.webkitURL ) { // Chrome allows the link to be clicked without actually adding it to the DOM.
         downloadLink.href = window.webkitURL.createObjectURL( codeAsBlob );
@@ -549,19 +335,10 @@ function downloadCode( ) {
 
 // document is loaded get the codes and set the call back
 $( document ).ready( function( ) {
-    if ( location.protocol == 'about:' ) { // if the code is running in the app
-        alert ( 'Running in the SoloLearn app. Run me in your browser to make me fullscreen...' );
-    }
-    else if ( location.hostname == 'code.sololearn.com' ) { // if the code is running in the browser under SoloLearn
+    if ( location.hostname == 'code.sololearn.com' ) { // if the code is running in the browser under SoloLearn
         if ( confirm ( 'Running in your browser under SoloLearn...\nLaunch the download to make me fullscreen?' ) ) {
             downloadCode( );
         }
-    }
-    else if ( location.protocol == 'file:' ) { // if the code is running in the browser in a downloaded file
-        alert ( 'Thanks a lot for making me fullscreen!' );
-    }
-    else { // no clue where the code is running
-        alert ( 'I have no clue where I am running...' );
     }
 
     setTimeout( function() { 
