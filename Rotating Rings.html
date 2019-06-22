@@ -1,0 +1,57 @@
+<!-- Created by Modi -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rotating Rings</title>
+
+  <!-- JQuery -->
+  <script src='https://code.jquery.com/jquery-1.12.4.js'></script>
+  <script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>    
+  <script src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js'></script>   
+
+  <link rel='stylesheet' href='Rotating Rings.css'/>    
+  <script src='Rotating Rings.js'></script>    
+</head>
+<body onload=init() onresize=resize()>
+  <nav class="menuButton">
+    <span></span>
+    <span></span>
+    <span></span>
+  </nav>
+  <span class="menuSections">
+    <!-- Rings stuff -->
+    <label for=rainbow>Rainbow</label>
+    <input type=radio id=rainbow name=themeSelection value=rainbow oninput=resize()>
+    <label for=fire>Fire</label>
+    <input type=radio id=fire name=themeSelection value=fire checked oninput=resize()><br>
+    <label>Rotation Speed</label><br>
+    <input type=range min=-0.1 max=0.1 value=0.001 id=rotationSpeed step=0.001 oninput=resize()><br>
+    <label for=showBox>Show Box</label>
+    <input type=checkbox id=showBox><br>
+
+    <!-- Axis other view related stuff -->
+    <label for=showAxis>Show Axis</label>
+    <input type=checkbox id=showAxis><br>
+    <label>Ball Size</label><br>
+    <input type=range min=0.1 max=4 value=2 id=ballSize step=0.1 oninput=resize()><br>
+    <label>Fade Factor</label><br>
+    <input type=range min=0.05 max=0.6 value=0.2 id=fadeFactor step=0.01 oninput=resize()><br>
+    <label>Show Partially</label><br>
+    <input type=range min=0 max=6.3 value=6.3 id=showPartially step=0.1 oninput=resize()><br>
+  </span>
+
+  <div id="info" class="infoSections" style="text-align-Last:justify">Info Me!</div>
+
+  <div class="helpSections">
+    <p>Slide to rotate.</p>
+    <p>Double click to stop rotation.</p>
+    <p>Change the settings in the menu.</p>
+  </div>
+  
+  <canvas></canvas>
+  <button class="helpButton"><strong>?</strong></button>
+  <button class="infoButton"><strong>I</strong></button>
+  <button class="resetButton"><strong>X</strong></button>
+</body>
+</html>
