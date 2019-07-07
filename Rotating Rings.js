@@ -140,40 +140,6 @@ function init ( ) {
   animate ( );
 }
 
-// initialize the rotation factors
-var Axx, Axy, Axz;
-var Ayx, Ayy, Ayz;
-var Azx, Azy, Azz;
-function initRotate3d ( pitch, roll, yaw ) { 
-  const cosPitch = Math.cos ( pitch );  // pitch: y
-  const sinPitch = Math.sin ( pitch );
-  const cosRoll = Math.cos ( roll );  // roll: x
-  const sinRoll = Math.sin ( roll );
-  const cosYaw = Math.cos ( yaw );  // yaw: z
-  const sinYaw = Math.sin ( yaw );
-
-  Axx = cosYaw * cosPitch;
-  Axy = cosYaw * sinPitch * sinRoll - sinYaw * cosRoll;
-  Axz = cosYaw * sinPitch * cosRoll + sinYaw * sinRoll;
-
-  Ayx = sinYaw * cosPitch;
-  Ayy = sinYaw * sinPitch * sinRoll + cosYaw * cosRoll;
-  Ayz = sinYaw * sinPitch * cosRoll - cosYaw * sinRoll;
-
-  Azx = -sinPitch;
-  Azy = cosPitch * sinRoll;
-  Azz = cosPitch * cosRoll;
-}
-
-// do the actual rotation
-function doRotate3d ( ball ) { // pitch: x, roll: y, yaw: z
-  return {
-      x: Axx * ball.x + Axy * ball.y + Axz * ball.z,
-      y: Ayx * ball.x + Ayy * ball.y + Ayz * ball.z,
-      z: Azx * ball.x + Azy * ball.y + Azz * ball.z
-  };
-}
-
 function setRotationSpeed ( rotationSpeed ) {
   if ( rotationSpeed === 'stop' ) {
     $( '#doPitch' ).prop ( 'checked', false );
@@ -390,6 +356,91 @@ function addBall ( part, color, x, y, z ) {
   );
 }
 
+// initialize the rotation factors
+var Axx, Axy, Axz;
+var Ayx, Ayy, Ayz;
+var Azx, Azy, Azz;
+function initRotate3d ( pitch, roll, yaw ) { 
+  const cosPitch = Math.cos ( pitch );  // pitch: y
+  const sinPitch = Math.sin ( pitch );
+  const cosRoll = Math.cos ( roll );  // roll: x
+  const sinRoll = Math.sin ( roll );
+  const cosYaw = Math.cos ( yaw );  // yaw: z
+  const sinYaw = Math.sin ( yaw );
+
+  Axx = cosYaw * cosPitch;
+  Axy = cosYaw * sinPitch * sinRoll - sinYaw * cosRoll;
+  Axz = cosYaw * sinPitch * cosRoll + sinYaw * sinRoll;
+
+  Ayx = sinYaw * cosPitch;
+  Ayy = sinYaw * sinPitch * sinRoll + cosYaw * cosRoll;
+  Ayz = sinYaw * sinPitch * cosRoll - cosYaw * sinRoll;
+
+  Azx = -sinPitch;
+  Azy = cosPitch * sinRoll;
+  Azz = cosPitch * cosRoll;
+}
+
+// do the actual rotation
+function doRotate3d ( ball ) { // pitch: x, roll: y, yaw: z
+  return {
+      x: Axx * ball.x + Axy * ball.y + Axz * ball.z,
+      y: Ayx * ball.x + Ayy * ball.y + Ayz * ball.z,
+      z: Azx * ball.x + Azy * ball.y + Azz * ball.z
+  };
+}
+
+// initialize the yaw factors
+function initYaw ( yaw ) { 
+  const cosYaw = Math.cos ( yaw );  // yaw: z
+  const sinYaw = Math.sin ( yaw );
+
+  Axx = cosYaw;
+  Axy = -sinYaw;
+
+  Ayx = sinYaw;
+  Ayy = cosYaw;
+}
+
+// do the actual yawing
+function doYaw ( ball ) { // pitch: x, roll: y, yaw: z
+  return {
+      x: Axx * ball.x + Axy * ball.y,
+      y: Ayx * ball.x + Ayy * ball.y,
+      z: ball.z
+  };
+}
+
+// initialize the pitch roll factors
+function initPitchRoll ( pitch, roll ) { 
+  const cosPitch = Math.cos ( pitch );  // pitch: y
+  const sinPitch = Math.sin ( pitch );
+  const cosRoll = Math.cos ( roll );  // roll: x
+  const sinRoll = Math.sin ( roll );
+
+  Axx = cosPitch;
+  Axy = sinPitch * sinRoll;
+  Axz = sinPitch * cosRoll;
+
+  Ayy = cosRoll;
+  Ayz = -sinRoll;
+
+  Azx = -sinPitch;
+  Azy = cosPitch * sinRoll;
+  Azz = cosPitch * cosRoll;
+}
+
+// do the actual pitching and rolling
+function doPitchRoll ( ball ) { // pitch: x, roll: y, yaw: z
+  return {
+      x: Axx * ball.x + Axy * ball.y + Axz * ball.z,
+      y: Ayy * ball.y + Ayz * ball.z,
+      z: Azx * ball.x + Azy * ball.y + Azz * ball.z
+  };
+}
+
+
+
 let request;
 function animate ( ) {
   request = window.requestAnimationFrame ( animate );
@@ -423,10 +474,10 @@ function animate ( ) {
       parts[ i ].pitch += parts[ i ].deltaPitch;
       parts[ i ].roll += parts[ i ].deltaRoll;
       parts[ i ].yaw += parts[ i ].deltaYaw;
-      initRotate3d ( 0, 0, parts[ i ].yaw );
-      rotatePart ( rotationStream );
-      initRotate3d ( parts[ i ].roll, parts[ i ].pitch, 0 );
-      rotatePart ( rotationStream );
+      initYaw ( parts[ i ].yaw );
+      yawPart ( rotationStream );
+      initPitchRoll ( parts[ i ].roll, parts[ i ].pitch );
+      pitchRollPart ( rotationStream );
     }
     drawPart ( rotationStream );
   }
@@ -447,6 +498,28 @@ function animate ( ) {
     const partLength = part.length;
     for ( let i = 0; i < partLength; i++ ) {
       const ball = doRotate3d( part[ i ] );
+      part[ i ].x = ball.x;
+      part[ i ].y = ball.y;
+      part[ i ].z = ball.z;
+    }
+  }
+
+  // rotate a part
+  function yawPart ( part ) {
+    const partLength = part.length;
+    for ( let i = 0; i < partLength; i++ ) {
+      const ball = doYaw( part[ i ] );
+      part[ i ].x = ball.x;
+      part[ i ].y = ball.y;
+      part[ i ].z = ball.z;
+    }
+  }
+
+  // rotate a part
+  function pitchRollPart ( part ) {
+    const partLength = part.length;
+    for ( let i = 0; i < partLength; i++ ) {
+      const ball = doPitchRoll( part[ i ] );
       part[ i ].x = ball.x;
       part[ i ].y = ball.y;
       part[ i ].z = ball.z;
