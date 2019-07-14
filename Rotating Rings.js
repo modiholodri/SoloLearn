@@ -2,14 +2,10 @@
 // Created by Modi
 
 // sliding motion, based on screen coordinates
-var alpha = 0.5; // X rotation
-var cosAlpha, sinAlpha;
-var rotationSpeedX = 0;
+var rotationSpeedX = 0;  // X rotation
 var startSlideX;
-
-var beta = 0.5; // Y rotation
-var sinBeta, cosBeta;
-var rotationSpeedY = 0;
+var alpha = 0, beta = 0;
+var rotationSpeedY = 0;  // Y rotation
 var startSlideY;
 
 var mouseIsDown = false;
@@ -21,6 +17,7 @@ var parts = [ ];
 var blockSize;
 var ballSize = 2.0;
 var lampDistance;
+var viewerDistance;
 
 
 // store the coordinates of each touch
@@ -71,6 +68,7 @@ function initViewAndTouch ( ) {
   halfHeight = height / 2;
   blockSize = Math.min ( halfWidth, halfHeight ) * 0.8;
   lampDistance = -blockSize;  // from 0 in negative Z direction
+  viewerDistance = 10 * blockSize;
 
   var canvas = $( 'canvas' )[ 0 ];
   canvas.width = width;
@@ -330,7 +328,10 @@ function createParts ( ) {
 
 // create the containing box
 function createContainingBox ( ) {
-  outerBlock = [ ];
+  outerBlock[ 'pitch' ] = 0; outerBlock[ 'deltaPitch' ] = 0;
+  outerBlock[ 'roll' ] = 0; outerBlock[ 'deltaRoll' ] = 0;
+  outerBlock[ 'yaw' ] = 0; outerBlock[ 'deltaYaw' ] = 0;
+
   if ( !$( '#showBox' ).prop ( 'checked' ) ) return;
 
   // create the actual box
@@ -474,14 +475,11 @@ function animate ( ) {
 
   // draw a single part
   function drawIt ( ) {
-    // containing box
-    drawPart ( outerBlock );
-    
     // parts
     let rotationStream = [ ];
-    const numberOfParts = parts.length;
+    const numberOfParts = parts.length - 1;
     for ( let i = 0; i < numberOfParts; i++ ) {
-      addToRotationStream ( rotationStream, parts[ i ].balls );
+      addToPart ( rotationStream, parts[ i ].balls );
       // rotate the part for the shifted angles
       parts[ i ].pitch += parts[ i ].deltaPitch;
       parts[ i ].roll += parts[ i ].deltaRoll;
@@ -491,10 +489,23 @@ function animate ( ) {
       initPitchRoll ( parts[ i ].roll, parts[ i ].pitch );
       pitchRollPart ( rotationStream );
     }
+
+    addToPart ( rotationStream, parts[ numberOfParts ].balls );
+    let ballShadow = [ ];
+    addToPart ( ballShadow, rotationStream );
+    addToPart ( rotationStream, outerBlock );
+    // copy the shadow before the final rotation
+    shadowPart ( ballShadow );
+
+    // rotate the whole thing
+    initRotate3d ( alpha, beta, 0 );
+    rotatePart ( rotationStream );
+    rotatePart ( ballShadow );
+    
+    // draw everything
     drawPart ( rotationStream );
-    shadowPart ( rotationStream );
     ctx.globalAlpha = 0.2;
-    drawPart ( rotationStream );
+    drawPart ( ballShadow );
     ctx.globalAlpha = 1.0;
   }
 
@@ -532,14 +543,14 @@ function animate ( ) {
     }
   }
 
-  function addToRotationStream( rotationStream, part ) {
-    const partLength = part.length;
-    for ( let i = 0; i < partLength; i++ ) {
-      rotationStream.push ( { 
-          x: part[ i ].x, 
-          y: part[ i ].y, 
-          z: part[ i ].z, 
-          color: part[ i ].color } );
+  function addToPart( partWhereToAdd, partToAdd ) {
+    const partWhereToAddLength = partToAdd.length;
+    for ( let i = 0; i < partWhereToAddLength; i++ ) {
+      partWhereToAdd.push ( { 
+          x: partToAdd[ i ].x, 
+          y: partToAdd[ i ].y, 
+          z: partToAdd[ i ].z, 
+          color: partToAdd[ i ].color } );
     }
   }
 
@@ -615,11 +626,10 @@ function animate ( ) {
   
   // put it in perspective
   function project( x, y, z ) {
-    const x2 = x * cosAlpha - y * sinAlpha;
-    const y2 = ( x * sinAlpha + y * cosAlpha ) * sinBeta - z * cosBeta;
+    const shrinkFactor = viewerDistance / ( viewerDistance + z );
     return {
-      x: halfWidth + x2,
-      y: halfHeight - y2
+      x: halfWidth + x * shrinkFactor,
+      y: halfHeight - y * shrinkFactor
     };
   }
 }
@@ -651,10 +661,6 @@ function slideView ( x, y ) {
 function updateViewAngle ( deltaX, deltaY ) {
   alpha += deltaX / 800;
   beta += deltaY / 800;
-  cosAlpha = Math.cos ( alpha );
-  sinAlpha = Math.sin ( alpha );
-  sinBeta = Math.sin ( beta );
-  cosBeta = Math.cos ( beta );
 }
 
 // document is loaded get the codes and set the call back
