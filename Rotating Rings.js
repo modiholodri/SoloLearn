@@ -20,6 +20,8 @@ var parts = [ ];
 
 var blockSize;
 var ballSize = 2.0;
+var lampDistance;
+
 
 // store the coordinates of each touch
 var touchInfo = "";
@@ -68,11 +70,12 @@ function initViewAndTouch ( ) {
   halfWidth = width / 2;
   halfHeight = height / 2;
   blockSize = Math.min ( halfWidth, halfHeight ) * 0.8;
+  lampDistance = -blockSize;  // from 0 in negative Z direction
 
   var canvas = $( 'canvas' )[ 0 ];
   canvas.width = width;
   canvas.height = height;
-  ctx = canvas.getContext ( '2d' );
+  ctx = canvas.getContext ( '2d', { alpha: false } );
 
   // handle the touch stuff
   canvas.ontouchstart = function ( event ) {
@@ -316,6 +319,7 @@ function createParts ( ) {
   }
 
   createContainingBox ( );
+  createLamp ( );
 
   // count the balls
   totalBalls = outerBlock.length;
@@ -329,6 +333,7 @@ function createContainingBox ( ) {
   outerBlock = [ ];
   if ( !$( '#showBox' ).prop ( 'checked' ) ) return;
 
+  // create the actual box
   for ( let step = -1; step <= 1; step += 0.2 ) {
     var sizeStep = blockSize*step;
     addBall ( outerBlock, 'rgba(140,140,140,0.7)',  blockSize,  blockSize, sizeStep );
@@ -344,6 +349,14 @@ function createContainingBox ( ) {
     addBall ( outerBlock, 'rgba(140,140,140,0.7)', blockSize, sizeStep, -blockSize );
     addBall ( outerBlock, 'rgba(140,140,140,0.7)', -blockSize, sizeStep, -blockSize );
   }
+}
+
+// create the lamp
+function createLamp ( ) {
+  addBall ( outerBlock, 'lightYellow', 0, 0, -blockSize );
+  addBall ( outerBlock, 'lightYellow', 1, 1, -blockSize-2 );
+  addBall ( outerBlock, 'lightYellow', -1, -1, -blockSize-2 );
+  addBall ( outerBlock, 'lightYellow', 0, 0, -blockSize-2 );
 }
 
 // add another ball
@@ -440,7 +453,6 @@ function doPitchRoll ( ball ) { // pitch: x, roll: y, yaw: z
 }
 
 
-
 let request;
 function animate ( ) {
   request = window.requestAnimationFrame ( animate );
@@ -480,8 +492,46 @@ function animate ( ) {
       pitchRollPart ( rotationStream );
     }
     drawPart ( rotationStream );
+    shadowPart ( rotationStream );
+    ctx.globalAlpha = 0.2;
+    drawPart ( rotationStream );
+    ctx.globalAlpha = 1.0;
   }
-  
+
+  // rotate a part
+  function shadowPart ( part ) {
+    const partLength = part.length;
+    const lampHight = lampDistance - blockSize;
+    for ( let i = 0; i < partLength; i++ ) {
+      const zoomFactor = -( lampHight ) / ( part[ i ].z + blockSize ); 
+      const zoomedX = part[ i ].x * zoomFactor;
+      const zoomedY = part[ i ].y * zoomFactor;
+      const absoluteZoomedX = Math.abs ( zoomedX );
+      const absoluteZoomedY = Math.abs ( zoomedY );
+      if ( absoluteZoomedX > blockSize || absoluteZoomedY > blockSize ) {
+        if ( absoluteZoomedX > absoluteZoomedY ) { // any X wall
+          const factorX = blockSize / absoluteZoomedX;
+          part[ i ].y = zoomedY * factorX;
+          part[ i ].z = -( lampHight * factorX - lampDistance );
+          if ( zoomedX > 0 ) part[ i ].x = blockSize; // positive X wall
+          else part[ i ].x = -blockSize; // negative X wall
+        }
+        else { // any Y wall
+          const factorY = blockSize / absoluteZoomedY;
+          part[ i ].x = zoomedX * factorY;
+          part[ i ].z = -( lampHight * factorY - lampDistance );
+          if ( zoomedY > 0 ) part[ i ].y = blockSize; // positive Y wall
+          else part[ i ].y = -blockSize; // negative Y wall
+        }
+      }
+      else { // bottom wall
+        part[ i ].x = zoomedX;
+        part[ i ].y = zoomedY;
+        part[ i ].z = blockSize;
+      }
+    }
+  }
+
   function addToRotationStream( rotationStream, part ) {
     const partLength = part.length;
     for ( let i = 0; i < partLength; i++ ) {
@@ -551,7 +601,6 @@ function animate ( ) {
 
   // draw a simple line (axis)
   function drawLine ( text, pa2d, pb2d, color ) {
-    ctx.globalAlpha = 0.3;
     ctx.lineWidth = 2;
     ctx.strokeStyle = color;
     ctx.beginPath ( );
